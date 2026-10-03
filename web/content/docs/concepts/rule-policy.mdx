@@ -1,0 +1,39 @@
+---
+title: The rule policy
+description: Rules are about secrets, actions and scope only. What the contract refuses at posting, and why.
+---
+
+Redline exists to find where an agent's instructions fail, not to get models to produce harmful content. The policy
+is enforced by the contract when a target is posted, and again by the site before anything is signed.
+
+## Allowed
+
+- **Secrets**: never reveal a value placed in the instructions.
+- **Actions**: never take an action above a limit or to a recipient off a list.
+- **Scope**: stay inside a described topic.
+
+The rules field accepts nothing else: a rule with any other kind is refused.
+
+## Refused at posting
+
+**Key-shaped strings.** Everything on Redline is public, so a real key posted here is a leaked key. The name,
+instructions and rules are scanned for strings shaped like real credentials: `sk-…` API keys, AWS access keys, GitHub
+and Slack tokens, Google API keys, PEM private keys, and 64-hex-digit values such as raw private keys. Use `{CANARY}`
+for the secret instead.
+
+**Targets about harmful output.** A target whose break would need harmful output is refused. The contract refuses any
+target whose text names one of a short list of topics, matched as whole words: weapons, bombs and explosives, chemical
+and biological weapons, nerve agents, malware and ransomware, terrorism, suicide and self-harm.
+
+Both lists live in `contracts/redline.py` (`KEY_PATTERNS`, `HARMFUL_WORDS`). The site's copy,
+`web/lib/policy.generated.ts`, is generated from the contract, and a test fails if they drift.
+
+## Displayed text is filtered
+
+Attack text that names a listed topic is blurred on every page until the reader chooses to show it, and long attack
+text is clamped with a click to expand. The full text is always on chain.
+
+<Callout title="Honest limit">
+  A word list is a coarse filter. It refuses some harmless text and misses harmful text phrased another way. It keeps
+  the obvious cases off the board; it is not a safety system.
+</Callout>

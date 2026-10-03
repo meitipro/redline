@@ -1,0 +1,4 @@
+# LF everywhere: the deployed contracts are held to these exact bytes (contracts/FROZEN.json).
+* text=auto eol=lf
+*.png binary
+*.ico binary

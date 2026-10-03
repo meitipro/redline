@@ -1,0 +1,49 @@
+---
+title: Post your first target
+description: Put a test version of your agent's instructions in front of many attackers, with rules, a bounty and a lock.
+---
+
+<Callout type="warn" title="Post a test version">
+  Everything on Redline is public. Replace real keys, URLs and account numbers with test values. The posting form scans
+  for key-shaped strings and the contract refuses them again on chain, but no scanner catches everything.
+</Callout>
+
+## What you post
+
+| Field | Limits | Notes |
+|---|---|---|
+| Name | 1 to 60 characters, one line | Shown on every card |
+| Mode | `SECRET`, `ACTION` or `SCOPE` | The target's main rule; it must have a rule of that kind |
+| Instructions | 20 to 4,000 characters | Your agent's instructions, test version. Put `{CANARY}` where the secret goes |
+| Rules | One to three, at most one of each kind | See [Modes](/docs/concepts/modes) |
+| Bounty | Above zero | The value you send with the post |
+| Entry fee | Above zero, in wei on chain | What each attack costs. Held fees join the bounty |
+| Lock | 7 to 90 days | The bounty cannot leave before it ends; attacks are taken until then |
+
+## Post it
+
+<Steps>
+  <Step>
+    Open [Post a target](/new). **Use the example** fills in the Tollgate treasury agent: action mode, a secret rule
+    and an action rule with a 10 USDC limit and a two-address allowlist.
+  </Step>
+  <Step>
+    Write your rules. A secret rule needs the `{CANARY}` slot in the instructions. An action rule needs a maximum
+    amount, and optionally an allowlist of recipients, one per line. A scope rule is one sentence naming what the agent
+    may talk about.
+  </Step>
+  <Step>
+    Set the bounty, entry fee and lock, and press **Post**. The form shows every problem it can see before you sign, in
+    the contract's own words.
+  </Step>
+</Steps>
+
+## While it is open
+
+- **Watch the record.** Every attempt, held, broken or rejected, appears on the target page, newest first.
+- **Top up.** Only you can add to the bounty, while the target is open.
+- **Patch and post version 2.** A break closes the target. Fix the instructions and post them as a new target.
+- **Reclaim.** If nobody broke it by the end of the lock, **Reclaim** returns the bounty with every held fee. Attacks
+  still queued then become void and their hunters are refunded.
+
+You never judge, and you cannot withdraw before the lock ends. That is what makes a bounty credible to hunters.

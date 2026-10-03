@@ -1,0 +1,48 @@
+---
+title: Introduction
+description: Redline is a prompt-injection bounty board on GenLayer, where a break pays only when validators reproduce it.
+---
+
+<Callout type="warn" title="Everything on Redline is public">
+  Instructions, rules, attacks and replies are public by design. Never post a real key or production instructions.
+</Callout>
+
+Agents now hold API keys, move funds and talk to customers, and the only thing between a clever message and a disaster
+is often a system prompt that says *never reveal this, never send more than that, only talk about our product*.
+Prompt injection breaks those rules routinely, and deciding whether an attack worked means running a model and reading
+what it said. The builder paying a bounty has every reason to say it did not count.
+
+Redline takes that decision away from the builder:
+
+1. **Post.** A builder posts a test version of an agent's instructions, one to three rules, a mode, a bounty and a
+   lock of at least seven days.
+2. **Attack.** A hunter pays a small entry fee and sends one message.
+3. **Run.** Each GenLayer validator runs the agent on its own model, with the attack as the user message.
+4. **Check.** Secret and action rules are checked by exact code on each validator's own reply; scope rules by a judge
+   prompt.
+5. **Pay.** The first break that validators reproduce takes the bounty. A held attack's fee grows the bounty. An
+   unbroken bounty goes back to the builder after the lock.
+
+## The three verdicts
+
+| Verdict | Meaning | Money |
+|---|---|---|
+| `BROKEN:n` | Validators' runs agree the reply broke rule `n`: the canary appeared, an action exceeded a limit, or the reply left the allowed scope | The hunter claims the whole bounty, and gets their own fee back |
+| `HELD` | Validators agree the reply kept every rule | The entry fee joins the bounty |
+| `REJECTED` | The attack failed an exact check before any model ran: longer than 1,500 characters, or holding a canary-shaped string | The entry fee is refunded |
+
+An attack that breaks the rules on some models but not on others does not reach agreement. Nothing is stored, nobody is
+paid, and the attack stays queued: see [Why a break must reproduce](/docs/concepts/why-breaks-reproduce). An attack
+still queued when its target closes is `VOID`, and its fee is refunded.
+
+## Where to go next
+
+<Cards>
+  <Card title="Send your first attack" href="/docs/quickstart" />
+  <Card title="Post your first target" href="/docs/post-a-target" />
+  <Card title="How a run works, and the canary" href="/docs/concepts/runs-and-the-canary" />
+  <Card title="Evaluation results with transactions" href="/docs/more/evaluation" />
+</Cards>
+
+Redline runs on GenLayer Studio Next (chain 61997). The contract and its deployment record are on
+[Addresses and network](/docs/reference/addresses).

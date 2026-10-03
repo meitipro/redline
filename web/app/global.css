@@ -1,0 +1,549 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/*
+ * Redline: the Recourse dark ground with one accent, red #F87171. Red marks
+ * breaks and money moving to hunters; held attempts stay grey. 4 px radius, no
+ * gradients. Outfit for text, Geist Mono for numbers and hashes, Tektur for
+ * the wordmark.
+ */
+
+:root {
+  --bg: #0b0b0e;
+  --surface: #111116;
+  --surface-2: #17171e;
+  --surface-3: #1e1e27;
+  --line: #25252f;
+  --line-strong: #34343f;
+  --ink: #ececf1;
+  --ink-2: #a9a9b8;
+  --ink-3: #74747f;
+  --accent: #f87171;
+  --accent-ink: #fca5a5;
+  --accent-soft: rgb(248 113 113 / 0.12);
+  --accent-line: rgb(248 113 113 / 0.38);
+  --on-accent: #1f0707;
+  --danger: #f2a7a7;
+  --radius: 4px;
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-display: 'Tektur', var(--font-sans);
+  color-scheme: dark;
+}
+
+.dark {
+  --color-fd-background: #0b0b0e;
+  --color-fd-foreground: #ececf1;
+  --color-fd-muted: #17171e;
+  --color-fd-muted-foreground: #a9a9b8;
+  --color-fd-popover: #111116;
+  --color-fd-popover-foreground: #ececf1;
+  --color-fd-card: #111116;
+  --color-fd-card-foreground: #ececf1;
+  --color-fd-border: #25252f;
+  --color-fd-primary: #f87171;
+  --color-fd-primary-foreground: #1f0707;
+  --color-fd-secondary: #17171e;
+  --color-fd-secondary-foreground: #ececf1;
+  --color-fd-accent: rgb(248 113 113 / 0.12);
+  --color-fd-accent-foreground: #ececf1;
+  --color-fd-ring: #f87171;
+}
+
+.dark #nd-sidebar {
+  --color-fd-muted: #17171e;
+  --color-fd-secondary: #1e1e27;
+  --color-fd-muted-foreground: #a9a9b8;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .c-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  @media (max-width: 560px) {
+    .c-wrap {
+      padding: 0 16px;
+    }
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+  .serif {
+    font-family: var(--font-serif);
+  }
+
+  /* -- navbar ---------------------------------------------------------- */
+  .c-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(11 11 14 / 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .c-nav-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 60px;
+  }
+  .c-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .c-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .c-links {
+    display: flex;
+    gap: 18px;
+    font-size: 14.5px;
+  }
+  .c-links a {
+    color: var(--ink-2);
+  }
+  .c-links a:hover,
+  .c-links a[aria-current='page'] {
+    color: var(--ink);
+  }
+  .c-nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (max-width: 900px) {
+    .c-links {
+      display: none;
+    }
+  }
+
+  /* -- pills, buttons -------------------------------------------------- */
+  .c-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 9px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .c-pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: var(--accent);
+  }
+  .c-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 15px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line-strong);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .c-btn:hover {
+    border-color: var(--ink-3);
+  }
+  .c-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .c-btn.solid {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  .c-btn.solid:hover {
+    background: var(--accent-ink);
+    border-color: var(--accent-ink);
+  }
+  .c-btn.ghost {
+    background: transparent;
+  }
+  .c-btn.small {
+    height: 30px;
+    padding: 0 11px;
+    font-size: 13px;
+  }
+  .c-btn.wide {
+    width: 100%;
+  }
+
+  /* -- type ------------------------------------------------------------ */
+  .c-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .c-h1 {
+    font-size: clamp(40px, 6.4vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+  .c-h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .c-h2 {
+    font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .c-h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .c-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 36em;
+  }
+  .c-muted {
+    color: var(--ink-2);
+  }
+  .c-faint {
+    color: var(--ink-3);
+  }
+  .c-quote {
+    font-family: var(--font-serif);
+    font-size: 23px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  /* -- surfaces -------------------------------------------------------- */
+  .c-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .c-card.pad {
+    padding: 20px;
+  }
+  .c-section {
+    padding: 72px 0;
+    border-top: 1px solid var(--line);
+  }
+  .c-grid-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .c-grid-2 {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+  .c-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .c-steps > div {
+    background: var(--surface);
+    padding: 22px;
+  }
+  @media (max-width: 900px) {
+    .c-steps {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .c-steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  /* -- verdicts: accent for yes, grey for no and not yet ---------------- */
+  .c-verdict {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 9px;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-2);
+    background: var(--surface-2);
+  }
+  .c-verdict.yes,
+  .c-verdict.broken {
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-color: var(--accent-line);
+  }
+  .c-verdict.held {
+    color: var(--ink-2);
+  }
+  .c-verdict.quiet {
+    color: var(--ink-3);
+    border-style: dashed;
+  }
+
+  /* -- the wordmark, the canary slot and the values that broke a rule -- */
+  .c-word {
+    font-family: var(--font-display);
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .c-slot {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    padding: 1px 5px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--accent-line);
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    white-space: nowrap;
+  }
+  .c-hit {
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+  .c-pre {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .c-blur {
+    filter: blur(5px);
+    user-select: none;
+  }
+
+  /* -- forms ----------------------------------------------------------- */
+  .c-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+  .c-input,
+  .c-textarea,
+  .c-select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    padding: 9px 11px;
+  }
+  .c-textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.55;
+  }
+  .c-input:focus,
+  .c-textarea:focus,
+  .c-select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .c-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 9px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
+    background: transparent;
+    cursor: pointer;
+  }
+  .c-chip:hover {
+    border-color: var(--accent-line);
+    color: var(--accent-ink);
+  }
+
+  /* -- tables ---------------------------------------------------------- */
+  .c-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+  .c-table th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .c-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .c-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* -- misc ------------------------------------------------------------ */
+  .c-rule {
+    height: 1px;
+    background: var(--line);
+    border: 0;
+  }
+  .c-kv {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .c-kv > div {
+    background: var(--surface);
+    padding: 14px 18px;
+    min-width: 0;
+  }
+  .c-kv dt {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .c-kv dd {
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 640px) {
+    .c-kv {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+  .c-note {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+  }
+  .c-note.accent {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+  .c-link {
+    color: var(--accent-ink);
+    text-underline-offset: 3px;
+  }
+  .c-link:hover {
+    text-decoration: underline;
+  }
+  .c-row-link {
+    display: block;
+    transition: background 0.12s;
+  }
+  .c-row-link:hover {
+    background: var(--surface-2);
+  }
+  .c-spin {
+    width: 14px;
+    height: 14px;
+    border-radius: 99px;
+    border: 2px solid var(--accent-line);
+    border-top-color: var(--accent);
+    animation: c-spin 0.9s linear infinite;
+  }
+  @keyframes c-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .c-spin {
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+---
+title: Why a break must reproduce
+description: A break pays only when every validator's run of the agent breaks the same rule.
+---
+
+Whether an attack worked depends on running the agent and reading its reply, and the party paying should not decide
+it. On GenLayer, every validator runs the agent against the attack on its own model, checks its own reply, and the
+verdict stands only when they agree.
+
+## What validators compare
+
+Exactly one value: `HELD`, or `BROKEN:` followed by the rule number. Not the reply, not the reason. In secret and action
+rules the verdict is computed by code from each validator's own reply, so a disagreement can only come from the models
+behaving differently, which is exactly the robustness question.
+
+There is no tolerance in the comparison. A validator whose own run held never agrees with a leader whose run broke, and
+the other way round.
+
+## A flaky trick never pays
+
+A trick that works once on one model and not on others does not reach agreement. The round ends without a verdict:
+
+- nothing is stored, and the target's record does not change;
+- nobody is paid, and the hunter's fee stays in escrow;
+- the attack stays queued. Anyone may send `judge` again, and every new round needs a new committee to agree.
+
+So the bounties go to breaks that reveal a real weakness in the instructions, and a prompt that holds across several
+different models is more robust than one tested on a single model.
+
+<Callout type="warn" title="A signal, not a certificate">
+  Redline tests the posted instructions on the models validators run, not on your production model and tools. A hold
+  across several models is a strong signal; it is not a guarantee about your deployment. See
+  [Limitations](/docs/more/limitations).
+</Callout>

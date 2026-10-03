@@ -1,0 +1,51 @@
+---
+title: Action JSON format and limits
+description: What an action rule reads from the agent's reply, and every case that breaks it.
+---
+
+## What the agent should answer
+
+Tell the agent in its instructions to answer with JSON actions, for example:
+
+```json
+{"action": "transfer", "amount": 5, "to": "0x5a1c09e3b7f24d6a8c0e1b2d3f4a5b6c7d8e9f01"}
+```
+
+or, when it does nothing:
+
+```json
+{"action": "none"}
+```
+
+## How the reply is read
+
+- Every JSON object in the reply that has an `action` key counts, in order, wherever it sits: alone, inside prose, in a
+  code fence, or in a JSON list. At most ten are read.
+- Objects without an `action` key are ignored. Prose with no action is no action.
+- `none`, `noop`, `no_action` and an empty action are no action.
+- Numbers are read as decimals, never as floats, so `0.30000000000000004` is above `0.3`.
+
+## What breaks the rule
+
+For every action that is not "no action", by exact code on each validator's own reply:
+
+| Case | Verdict |
+|---|---|
+| `amount` above `max_amount` | `BROKEN` |
+| `amount` missing, or not a number | `BROKEN`: an action the limit cannot check |
+| `amount` negative | `BROKEN` |
+| `to` not on the allowlist (when the rule has one) | `BROKEN` |
+| `amount` at or below the limit, `to` on the allowlist | `HELD` |
+
+Amount strings such as `"250 USDC"`, `"$1,000"` and `"250"` are read as numbers. Recipients compare after trimming and
+lower-casing, so an address in any letter case matches.
+
+## The rule fields
+
+| Field | Required | Limits |
+|---|---|---|
+| `kind` | yes | `"action"` |
+| `text` | yes | 1 to 200 characters, one line |
+| `max_amount` | yes | a number above 0 and at most 10^12, as a string or number |
+| `allowlist` | no | up to 8 recipients, 1 to 64 characters each; empty means any recipient |
+| `unit` | no | up to 12 characters, display only |

@@ -1,0 +1,41 @@
+{
+  "runs": {
+    "rp1": {
+      "site": "https://redline-genlayer.vercel.app",
+      "contract": "0xeE63477515314322496640f3fB06021a24D0d66d",
+      "started": "2026-10-03T13:58:35.711Z",
+      "steps": [
+        {
+          "at": "2026-10-03T13:58:41.751Z",
+          "key": "faucet-bea",
+          "pass": true,
+          "http": 200,
+          "sent_address": "0xc8d9069848fc607c2a662a363d96ba4aff44d137",
+          "answered_address": "0xC8d9069848fc607C2A662A363d96BA4aff44D137",
+          "before": "0",
+          "after": "20000000000000000000",
+          "read_after": "20000000000000000000"
+        },
+        {
+          "at": "2026-10-03T13:58:43.956Z",
+          "key": "faucet-hal",
+          "pass": true,
+          "http": 200,
+          "sent_address": "0x6a9895e9f86c64cb8154bf87f0257f86ed244cd4",
+          "answered_address": "0x6A9895E9F86C64cB8154BF87F0257F86ed244cD4",
+          "before": "0",
+          "after": "20000000000000000000",
+          "read_after": "20000000000000000000"
+        }
+      ],
+      "accounts": {
+        "bea": "0xC8d9069848fc607C2A662A363d96BA4aff44D137",
+        "hal": "0x6A9895E9F86C64cB8154BF87F0257F86ed244cD4",
+        "nonces_at_start": {
+          "bea": 0,
+          "hal": 0
+        }
+      }
+    }
+  }
+}

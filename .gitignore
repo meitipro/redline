@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+.venv*/
+.pytest_cache/
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+web/tsconfig.tsbuildinfo
+web/next-env.d.ts
+web/.source/
+# Keys never live in this repository: scripts keep them in ~/.redline/.
+accounts.json
+# Local tool settings.
+.claude/
+# Vercel CLI link data.
+.vercel/
+
+# Leftovers from an interrupted copy of the Fairshare site shell; safe to delete by hand.
+_leftover-fairshare-web-copy/
+_empty-web-shell/
+npm-ci.log

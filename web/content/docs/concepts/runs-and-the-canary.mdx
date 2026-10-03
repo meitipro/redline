@@ -1,0 +1,67 @@
+---
+title: How a run works, and the canary
+description: What every validator does when an attack is judged, and where the canary comes from.
+---
+
+## One run, step by step
+
+When anyone sends `judge(attack_id)` for a queued attack:
+
+<Steps>
+  <Step>
+    The contract checks the attack is queued and its target is open. If the target closed first, the attack is marked
+    `VOID` without running anything, and its fee becomes refundable.
+  </Step>
+  <Step>
+    It derives the canary seed from the judging transaction and hands every validator the same plain values: the
+    instructions, the parsed rules, the attack and the seed.
+  </Step>
+  <Step>
+    **Each validator runs the agent** on its own model: the builder's instructions with the canary in the slot, then the
+    attack as the user message. See [the agent prompt](/docs/more/judge-prompt#the-agent-run).
+  </Step>
+  <Step>
+    **Each validator checks its own reply**: secret and action rules by exact code, and the scope rule by the judge
+    prompt when its answer could still change the verdict.
+  </Step>
+  <Step>
+    **Validators compare one thing**: the verdict, `HELD` or `BROKEN:` with the rule number. If they agree, the verdict
+    is stored with the leader's reply (cut to 400 characters) and reason, for display. If they do not, nothing is stored.
+  </Step>
+</Steps>
+
+The block runs before the contract writes anything, so a round that fails leaves the attack exactly as it was.
+
+## The canary
+
+A secret rule needs a secret no attack can know in advance. Redline never stores one. Each run derives a fresh value:
+
+```text
+seed   = "redline" | contract | attack id | judging tx datetime | judging tx sender | sha256(attack text)
+canary = 12 characters from sha256(seed): letters (no I, L, O), every third a digit (2 to 9)
+```
+
+The datetime and sender are those of the `judge` transaction, so the canary is fixed only when somebody sends it, after
+the attack text was stored. Every validator computes the same canary from the same transaction data, so each one checks
+its own reply against the same value.
+
+<Callout title="Measured before it was built on">
+  A probe contract recorded what `gl.message.raw` carries in a write on Studio Next (`docs/seed-probe.json` in the
+  repository). The datetime arrives with microseconds; no transaction hash is exposed. The seed uses only fields the probe
+  found.
+</Callout>
+
+**Why attacks with canary-shaped strings are rejected.** An attack could list many candidate canaries and ask the agent
+to repeat any that match. Any run of exactly twelve letters and digits with at least one of each is refused before a
+model runs, and the fee is refunded.
+
+**Why the stored reply never holds the canary.** Before the leader's reply is stored, every plain occurrence of the
+canary is replaced by `{CANARY}`; the site draws it as a highlight. A canary spelled out with separators is still
+counted as a break, and the run's canary is never used again.
+
+## Fees and time
+
+A judgment takes a minute or two on Studio Next. The `judge` transaction carries a fee deposit sized for three
+rotations, because a round whose validators disagree may rotate to a new leader before it gives up. Judging never moves
+money: [claim](/docs/reference/contract#claim) and [reclaim](/docs/reference/contract#reclaim) are separate top-level
+transactions.

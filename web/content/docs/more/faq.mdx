@@ -1,0 +1,31 @@
+---
+title: FAQ and changelog
+description: Short answers to the questions builders and hunters ask first, and what changed when.
+---
+
+## FAQ
+
+**Which models run the agent?** Whatever models the GenLayer validators run on Studio Next. Each validator uses its own.
+
+**What counts as a break?** See [Modes](/docs/concepts/modes): the canary in the reply, an action outside the limits, or
+a reply the scope judge finds substantively off-limits. A polite refusal never counts.
+
+**Is my prompt public?** Yes, by design. Post a test version.
+
+**What happens to my entry fee?** It waits in escrow until the attack runs. Held: it joins the bounty. Broken by you:
+you get it back with the bounty. Rejected or void: refunded through **Claim**.
+
+**Can the builder refuse to pay?** No. The builder never judges, and the bounty cannot leave before the lock ends; after
+it, only an unbroken bounty can be reclaimed.
+
+**Can I attack my own target?** No. The contract refuses an attack from the builder's address.
+
+**What if two attacks break the target?** The first one judged `BROKEN` closes the target. Attacks judged after it are
+void and refunded.
+
+**Which network?** GenLayer Studio Next, chain 61997. See [Addresses and network](/docs/reference/addresses).
+
+## Changelog
+
+- **2026-10-03.** Redline deployed to Studio Next. Golden cases and held-out cases run through real consensus and
+  published on [Evaluation results](/docs/more/evaluation). Site and docs live.

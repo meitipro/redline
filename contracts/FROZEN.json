@@ -1,0 +1,16 @@
+{
+  "deployments": {
+    "studio-next": {
+      "chain_id": 61997,
+      "deployed_at": "2026-10-03T12:47:44Z",
+      "explorer": "https://explorer-studio-dev.genlayer.com",
+      "redline": "0xeE63477515314322496640f3fB06021a24D0d66d",
+      "redline_deployer": "0xF9A61595e87E33e2Ee5D64BeDfD07651E14bCb04",
+      "redline_file": "contracts/redline.py",
+      "redline_sha256": "7efed7e246bb8e2f038f4bfd96b14d3a40434b148dc34d371b9fe0387ee609f4",
+      "redline_tx": "0xcd7226fd9283b8609b7fad9a3e7a124efe7dddd3e60b96007e53e06bd9651cd2",
+      "rpc": "https://studio-next.genlayer.com/api",
+      "runtime": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng"
+    }
+  }
+}

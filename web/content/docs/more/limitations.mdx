@@ -1,0 +1,32 @@
+---
+title: Limitations
+description: What Redline does not do, stated plainly.
+---
+
+**It tests instructions, not deployments.** Redline runs the posted instructions on the models GenLayer validators run.
+Your production agent may use another model, other tools and another system prompt. A hold across several models is a
+strong signal, not a certificate, and a break here is a weakness in the instructions, not proof your deployment is
+exploitable.
+
+**One prompt, two roles.** A chat API keeps system instructions and the user message apart by role. Here they share one
+prompt, with both texts fenced so an attack cannot forge the boundary. Role-based defences your production stack relies
+on are not modelled.
+
+**Everything is public.** Instructions, rules, attacks and replies are on chain and on this site. Never post a real
+secret or production instructions.
+
+**A round without agreement leaves the attack queued.** When the validators' models behave differently, nothing is
+stored and anyone may send `judge` again. Each new round needs a new committee to agree on the same break, so a flaky
+trick needs every validator at once to go its way, but repeated rounds are not prevented.
+
+**The canary is single-use, not secret forever.** A reply that spells the canary with separators still counts as a break
+and is stored as written. That run's canary is never used again, so nothing is lost.
+
+**The content policy is a word list.** It refuses obvious harmful targets and blurs obvious harmful attack text. It is
+coarse in both directions.
+
+**Reclaim waits for the lock.** A bounty is locked for at least seven days, so the reclaim path on the live contract
+can only be exercised once a lock has ended. It is covered by the offline test suite and by mutation testing.
+
+**Studio Next is a test network.** GEN here is test GEN from the faucet. The RPC rate-limits each IP, so the site caches
+reads for 20 seconds and drops the cache after each write.

@@ -1,0 +1,15 @@
+{
+  "title": "Redline docs",
+  "pages": [
+    "---Getting started---",
+    "index",
+    "quickstart",
+    "post-a-target",
+    "---Concepts---",
+    "...concepts",
+    "---Reference---",
+    "...reference",
+    "---More---",
+    "...more"
+  ]
+}

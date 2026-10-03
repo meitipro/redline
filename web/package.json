@@ -1,0 +1,33 @@
+{
+  "name": "redline-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/check-links.mjs && next build",
+    "dev": "node scripts/dev.mjs dev",
+    "start": "node scripts/dev.mjs start",
+    "types:check": "next typegen && tsc --noEmit",
+    "send-as": "node scripts/send-as.mjs"
+  },
+  "dependencies": {
+    "fumadocs-core": "16.15.14",
+    "fumadocs-mdx": "15.4.5",
+    "fumadocs-ui": "npm:@fumadocs/base-ui@16.15.14",
+    "genlayer-js": "2.0.0-rc.1",
+    "lucide-react": "^1.47.0",
+    "next": "16.3.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "viem": "^2.56.9"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^26.6.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  }
+}

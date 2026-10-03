@@ -1,0 +1,65 @@
+{
+  "network": "studio-next",
+  "probe": "0xd5EB1056739709263B631E27D05E586ff38009BB",
+  "deploy_tx": "0x3dca89e6778d66d07068a351193f6040f2c4e4c1087c7149ad70131f51989635",
+  "writes": [
+    {
+      "n": 1,
+      "tx": "0x2a964f8431c2e48c21954777cb14357f9dbe5f879b62a6e2a6c1178e3f31dd6e",
+      "ok": true,
+      "returned": "2026-10-03T12:34:38.768135Z",
+      "detail": ""
+    },
+    {
+      "n": 2,
+      "tx": "0x7daf0f8dc03353294ae03154e84b9bc47a9cad0e3e226bea0b2009de3cf915e6",
+      "ok": true,
+      "returned": "2026-10-03T12:34:48.181753Z",
+      "detail": ""
+    }
+  ],
+  "stored": [
+    {
+      "contract": "0xd5EB1056739709263B631E27D05E586ff38009BB",
+      "datetime": "2026-10-03T12:34:38.768135Z",
+      "entry_kind": "0",
+      "keys": [
+        "chain_id",
+        "contract_address",
+        "datetime",
+        "entry_data",
+        "entry_kind",
+        "entry_stage_data",
+        "is_init",
+        "origin_address",
+        "sender_address",
+        "signer_address",
+        "stack",
+        "value"
+      ],
+      "n": 1,
+      "sender": "0xF9A61595e87E33e2Ee5D64BeDfD07651E14bCb04"
+    },
+    {
+      "contract": "0xd5EB1056739709263B631E27D05E586ff38009BB",
+      "datetime": "2026-10-03T12:34:48.181753Z",
+      "entry_kind": "0",
+      "keys": [
+        "chain_id",
+        "contract_address",
+        "datetime",
+        "entry_data",
+        "entry_kind",
+        "entry_stage_data",
+        "is_init",
+        "origin_address",
+        "sender_address",
+        "signer_address",
+        "stack",
+        "value"
+      ],
+      "n": 2,
+      "sender": "0x6D0e1F662f604952e33dEbBF2a2522d395757878"
+    }
+  ]
+}
