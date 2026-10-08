@@ -7,8 +7,8 @@ Every field below, in the order the form asks. Counts are checked by `submission
 - **Logo:** `submission/redline-icon-512.png` (512 × 512, the site's own mark on a dark ground, safe for a circular crop)
 - **Project name:** Redline - bounties for breaking your agent's rules
 - **Primary tag:** AI & Agents
-- **Tag 1:** the closest option to *Agent Security* (or *Red Teaming*)
-- **Tag 2:** the closest option to *Bounties*
+- **Tag 1:** Model Evaluation
+- **Tag 2:** AI Policy Enforcement
 
 ## One-liner
 
