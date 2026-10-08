@@ -59,7 +59,7 @@ Optional video link: record `submission/demo-script.md` and paste the link here.
 ## Prove the path works
 
 <!-- proof -->
-Walked from two fresh accounts on the live site through the site's own signing code (run rp2): target 13 posted, 6 refusals read as refusals though ACCEPTED, attack 24 REJECTED before any model ran, 25 HELD, 27 BROKEN:1 (reply sent 50 USDC, limit 10), 26 VOID. The hunter claimed 16 GEN; his wallet moved by exactly that minus the claim's own fee, and both wallets reconcile to 0 wei over the run. Golden set 9/9 and held-out 3/3 through real consensus, all with transactions: redline-genlayer.vercel.app/docs/more/evaluation. Break judged: explorer-studio-dev.genlayer.com/tx/0x7a79a0e813f833b2e4cfe1c7a7acb2311ddd8212e76ea586b97c072de8fa08ee. Claim: explorer-studio-dev.genlayer.com/tx/0x7a6dabb8c1630b0f1465cc5e8ddec0060b475834bbe0b4163ad4fbded3d3f8b6.
+Two fresh wallets on the live site (run rp2): target 13 posted, 6 refusals shown as refusals, attack 24 REJECTED before any model ran, 25 HELD, 27 BROKEN:1 (50 USDC vs a 10 limit), 26 VOID. Claim of 16 GEN exact to the wei; both wallets reconcile to 0 wei. Golden 9/9, held-out 3/3: redline-genlayer.vercel.app/docs/more/evaluation. Claim tx: explorer-studio-dev.genlayer.com/tx/0x7a6dabb8c1630b0f1465cc5e8ddec0060b475834bbe0b4163ad4fbded3d3f8b6
 <!-- end -->
 
 - **Contract link:** https://explorer-studio-dev.genlayer.com/address/0xeE63477515314322496640f3fB06021a24D0d66d

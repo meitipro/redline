@@ -6,7 +6,7 @@ import re
 import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
-LIMITS = {"description": 1000, "steward": 500}
+LIMITS = {"description": 1000, "steward": 500, "proof": 500}
 
 text = (pathlib.Path(__file__).parent / "portal.md").read_text(encoding="utf-8")
 failed = False
