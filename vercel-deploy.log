@@ -1,25 +1,22 @@
 <claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
-Vercel CLI 62.2.0 (Node.js 24.19.0)
+Vercel CLI 62.7.0 (Node.js 24.19.0)
 Deploying redline-genlayer
-Uploading [--------------------] (0.0B/519.8KB)
-Uploading [=====---------------] (145.8KB/519.8KB)
-Uploading [==========----------] (272.1KB/519.8KB)
-Uploading [===============-----] (400.1KB/519.8KB)
-Uploading [====================] (519.8KB/519.8KB)
-  Inspect         https://vercel.com/mahdighs-projects/redline-genlayer/DE55JSVFPZCd349GYsxy5c86ZViK
-  Production      https://redline-genlayer-n39nitqpu-mahdighs-projects.vercel.app
+Uploading [--------------------] (0.0B/27.3KB)
+Uploading [==============------] (19.5KB/27.3KB)
+Uploading [====================] (27.3KB/27.3KB)
+  Inspect         https://vercel.com/mahdighs-projects/redline-genlayer/3r62PSCahxdqmH8NAz8HjU15meR3
+  Production      https://redline-genlayer-hc59zrmqm-mahdighs-projects.vercel.app
 Building…
 Building…
 Running build in Washington, D.C., USA (East) – iad1
 Build machine configuration: 2 cores, 8 GB
 Retrieving list of deployment files...
-Previous build caches not available.
 Downloading 82 deployment files...
+Restored build cache from previous deployment (DE55JSVFPZCd349GYsxy5c86ZViK)
 Running "vercel build"
 Vercel CLI 62.1.0
 Installing dependencies...
-npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-added 474 packages in 16s
+up to date in 1s
 258 packages are looking for funding
 run `npm fund` for details
 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
@@ -33,21 +30,17 @@ Running "npm run build"
 internal links ok across 15 docs pages
 ▲ Next.js 16.3.5 (Turbopack)
 Applying modifyConfig from Vercel
-✓ Running next.config.mjs took 377ms
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
+✓ Running next.config.mjs took 129ms
 Creating an optimized production build ...
-✓ Compiled successfully in 37.5s
+✓ Compiled successfully in 6.1s
 Running TypeScript ...
-Finished TypeScript in 3.4s ...
+Finished TypeScript in 1412ms ...
 Collecting page data using 1 worker ...
 Generating static pages using 1 worker (0/57) ...
 Generating static pages using 1 worker (14/57)
 Generating static pages using 1 worker (28/57)
 Generating static pages using 1 worker (42/57)
-✓ Generating static pages using 1 worker (57/57) in 5.8s
+✓ Generating static pages using 1 worker (57/57) in 10.8s
 Finalizing page optimization ...
 Running onBuildComplete from Vercel
 Route (app)                                                   Revalidate  Expire
@@ -83,21 +76,21 @@ Route (app)                                                   Revalidate  Expire
 ○  (Static)   prerendered as static content
 ●  (SSG)      prerendered as static HTML (uses generateStaticParams)
 ƒ  (Dynamic)  server-rendered on demand
-Build Completed in /vercel/output [1m]
+Build Completed in /vercel/output [25s]
 Deploying outputs...
-[2K[1A[2K[G  Production      https://redline-genlayer-n39nitqpu-mahdighs-projects.vercel.app
+[2K[1A[2K[G  Production      https://redline-genlayer-hc59zrmqm-mahdighs-projects.vercel.app
 Completing…
 ▲ Aliased         https://redline-genlayer.vercel.app
 {
   "status": "ok",
   "deployment": {
-    "id": "dpl_DE55JSVFPZCd349GYsxy5c86ZViK",
-    "url": "https://redline-genlayer-n39nitqpu-mahdighs-projects.vercel.app",
+    "id": "dpl_3r62PSCahxdqmH8NAz8HjU15meR3",
+    "url": "https://redline-genlayer-hc59zrmqm-mahdighs-projects.vercel.app",
     "productionUrl": "https://redline-genlayer.vercel.app",
-    "inspectorUrl": "https://vercel.com/mahdighs-projects/redline-genlayer/DE55JSVFPZCd349GYsxy5c86ZViK",
+    "inspectorUrl": "https://vercel.com/mahdighs-projects/redline-genlayer/3r62PSCahxdqmH8NAz8HjU15meR3",
     "readyState": "READY",
     "target": "production",
-    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_DE55JSVFPZCd349GYsxy5c86ZViK",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_3r62PSCahxdqmH8NAz8HjU15meR3",
     "buildMachine": {
       "cores": 2,
       "memory": 8192,
@@ -109,14 +102,18 @@ Completing…
       "vercel_authentication"
     ]
   },
-  "message": "Deployment redline-genlayer-n39nitqpu-mahdighs-projects.vercel.app ready. Production URL: https://redline-genlayer.vercel.app",
+  "message": "Deployment redline-genlayer-hc59zrmqm-mahdighs-projects.vercel.app ready. Production URL: https://redline-genlayer.vercel.app",
   "next": [
+    {
+      "command": "vercel git connect --scope mahdighs-projects",
+      "when": "Automatically deploy changes on every push"
+    },
     {
       "command": "vercel curl https://redline-genlayer.vercel.app",
       "when": "Verify deployment, including when Deployment Protection is enabled"
     },
     {
-      "command": "vercel inspect redline-genlayer-n39nitqpu-mahdighs-projects.vercel.app --scope mahdighs-projects",
+      "command": "vercel inspect redline-genlayer-hc59zrmqm-mahdighs-projects.vercel.app --scope mahdighs-projects",
       "when": "Inspect deployment"
     },
     {
@@ -125,4 +122,3 @@ Completing…
     }
   ]
 }
-exit 0
