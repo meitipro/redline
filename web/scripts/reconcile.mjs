@@ -30,10 +30,17 @@ for (const [who, address] of Object.entries({ bea: log.accounts.bea, hal: log.ac
   for (const s of log.steps.filter((x) => x.hash && x.from === address)) {
     const tx = await rpc('eth_getTransactionByHash', [s.hash]);
     const acct = tx?.data?.fee_accounting ?? {};
-    const net = BigInt(acct.paid_fee_value ?? 0) - BigInt(acct.total_refunded ?? 0);
-    const value = BigInt(s.value ?? 0);
+    // The primary fee is what leaves the wallet; see feeAccounting in reviewer-path.mjs for the message term.
+    const net =
+      (acct.top_ups ?? []).reduce((sum, t) => sum + BigInt(t.primaryAmount ?? 0), 0n) -
+      (acct.refunds ?? []).reduce((sum, r) => sum + BigInt(r.primary ?? 0), 0n);
+    // A refused write is rolled back with its value: only a write that returned took the value it carried.
+    const value = s.ok ? BigInt(s.value ?? 0) : 0n;
+    const message =
+      (acct.top_ups ?? []).reduce((sum, t) => sum + BigInt(t.messageFees ?? 0), 0n) -
+      (acct.refunds ?? []).reduce((sum, r) => sum + BigInt(r.message ?? 0), 0n);
     expected -= value + net;
-    rows.push({ key: s.key, hash: s.hash, value: value.toString(), fee_paid: String(acct.paid_fee_value ?? 0), refunded: String(acct.total_refunded ?? 0), fee_status: acct.status ?? null, outcome: s.ok ? 'returned' : s.status });
+    rows.push({ key: s.key, hash: s.hash, value: value.toString(), fee_paid: String(acct.paid_fee_value ?? 0), refunded: String(acct.total_refunded ?? 0), fee_status: acct.status ?? null, primary_net: net.toString(), message_consumed: message.toString(), outcome: s.ok ? 'returned' : s.status });
   }
   const claims = log.steps.filter((s) => s.key.startsWith('balance-') && s.key.endsWith(`-${who}`));
   const claimed = claims.reduce((sum, s) => sum + BigInt(s.paid_by_contract), 0n);

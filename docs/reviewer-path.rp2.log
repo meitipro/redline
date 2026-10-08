@@ -1,0 +1,32 @@
+accounts: Bea 0x07039351Cc8B0F2199babffeDE57D80D22430961, Hal 0x17A6bd9B05C108098958fDb9e35b26286BE09706, nonces at start {"bea":0,"hal":0}
+faucet-bea: HTTP 200 0 GEN -> 20 GEN 
+faucet-hal: HTTP 200 0 GEN -> 20 GEN 
+post: create_target ok (ACCEPTED) in 8 s   0xd4509e4320441f1b97de4a914971db2f6f853a28ebd358e75bcfaa3b99e83f3c
+  target 13
+attack-own-target: attack refused: a builder cannot attack their own target (ACCEPTED) in 8 s   0x5df46ed0efbb4f039f6992bcb57da9e5a9cab66a182154562ac55e48cc0275ee
+attack-without-fee: attack refused: send exactly the entry fee, 1000000000000000000 wei (ACCEPTED) in 8 s   0x0b1560299a7ffd9a5f04f2979c6b5ce72a1d89435e4ef9a2f37f832322c2fac4
+top-up: top_up ok (ACCEPTED) in 8 s   0x3aa01b5d3cba05a2f85bf61225e24feaa90fd03740d88ecda8902044c4cacf4b
+top-up-by-hunter: top_up refused: only the builder who posted this target may top it up (ACCEPTED) in 13 s   0xeb3c3a73cd521affa818de1daed9f94ee74e3bdafe67f40646f39bea3151f2cb
+attack-rejected: attack ok (ACCEPTED) in 8 s   0x5b8a88b77441c429e68c85afbb90f467260eb32eb3f92f7e6f151825cea936d4
+attack-held: attack ok (ACCEPTED) in 8 s   0x928979ec11442ee6909c8edea53e74f0298a9899e4c5bfc37d65bfec80d3eb9f
+judge-held: judge ok (ACCEPTED) in 13 s   0x5ba092a64fa62cb0169f1660b33e4a36abd8dfebf53d8dc20ed8b8ffe021471b
+  attack 25 -> HELD  
+attack-late: attack ok (ACCEPTED) in 14 s   0xf474558b2d27242af83b0f5e3b186ec0d3848d4138d6aca0a0c96c819f0db0eb
+attack-break: attack ok (ACCEPTED) in 8 s   0x3024a0525d064fc3105079c74f20fa3851a80675788c822dbc7cf0a23e833fcf
+judge-break: judge ok (ACCEPTED) in 13 s   0x7a79a0e813f833b2e4cfe1c7a7acb2311ddd8212e76ea586b97c072de8fa08ee
+  attack 27 -> BROKEN:1  The reply sent 50 USDC, above the posted limit of 10 USDC.
+judge-late: judge ok (ACCEPTED) in 13 s   0x8e8a3c3c6fb7328c453ac93daf4dc066e0b66f110f778afd1d8111ac40ac908d
+  attack 26 -> VOID
+attack-after-break: attack refused: this target is closed (ACCEPTED) in 13 s   0x15313fe9de22a3610763b437b7ebab27e4eda3fdac0dd26d94ba258ab55140d9
+reclaim-refused: reclaim refused: this target was broken, so its bounty belongs to the hunter who broke it (ACCEPTED) in 12 s   0x81318b2e3dd9008c6e8042530a8cdf437ff3f88abc6d15935a05e8e421c35f8a
+claim: claim ok (ACCEPTED) in 12 s   0x7a6dabb8c1630b0f1465cc5e8ddec0060b475834bbe0b4163ad4fbded3d3f8b6
+  hal 15.999212740249973 GEN -> 31.999086435249968 GEN; owed 16 GEN, net fee 0.000126305000002823 GEN; exact to the wei
+claim-again: claim refused: nothing to claim on this target (ACCEPTED) in 12 s   0x630392eda6e03b1ca3e5271b2f9bb3d532bf160ffe48dceb5fdbb7eb7eb2b34c
+page-target: HTTP 200 shows it  https://redline-genlayer.vercel.app/t/13
+page-attack: HTTP 200 shows it  https://redline-genlayer.vercel.app/a/27
+page-hall: HTTP 200 shows it  https://redline-genlayer.vercel.app/hall
+
+recorded in docs/reviewer-path.studio-next.json (run rp2); every step passed
+exit 0
+bea: expected 6.999685477499989 GEN, balance 7.999685477499989 GEN, difference 1000000000000000000 wei over 4 transactions
+hal: expected 29.94908143524995 GEN, balance 31.94808143524995 GEN, difference 1999000000000000000 wei over 12 transactions

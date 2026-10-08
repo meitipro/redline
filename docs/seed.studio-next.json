@@ -14,6 +14,21 @@
       "id": 11,
       "tx": "0x3ecbef4b03432a1f20ba0e3ad6870dc244769587b9a54a0ebfbe55a0c378ae04",
       "at": "2026-10-03T13:55:05Z"
+    },
+    "practice_a": {
+      "id": 14,
+      "tx": "0xe4c3d4f2c96dacdf2ec2b020744fbce3e2f802a80691ece789c0b4a9bb8936bb",
+      "at": "2026-10-08T00:28:52Z"
+    },
+    "practice_b": {
+      "id": 15,
+      "tx": "0x3bdeb95d1ac67c59f1b895942a287aa9238b7a88278c50122ee7a44e4afb864c",
+      "at": "2026-10-08T00:29:05Z"
+    },
+    "practice_c": {
+      "id": 16,
+      "tx": "0x93379609292404ecf1ed67ac5060e17da3aa8f675545f93fadce2e58a2a54056",
+      "at": "2026-10-08T00:29:12Z"
     }
   },
   "attacks": [
@@ -121,6 +136,14 @@
       "tx": "0x57a759ecb8aa9f7e3e54a9ab7af2e884ecb73520af74e32f56006bc8fe1555ee",
       "ok": true,
       "detail": ""
+    },
+    {
+      "target": "ledgerly",
+      "hunter": "seed_hunter_2",
+      "owed": "1000000000000000000",
+      "tx": "0xc42f242fe3a362d3cbeb0111252104f4f110ba5ef848813db5b6cb1044f5be66",
+      "ok": true,
+      "detail": ""
     }
   ],
   "contract": "0xeE63477515314322496640f3fB06021a24D0d66d",
@@ -130,5 +153,6 @@
     "seed_builder": "0x844e02E8a0828c371CCa369013EF58549F998641",
     "seed_hunter_1": "0x9eDa0e5f93FA61156f5B3C90A78e07E2341b925c",
     "seed_hunter_2": "0xbCEa663C007ce8779cb8D2D4aEDeB28CAf624149"
-  }
+  },
+  "finished": "2026-10-08T00:29:30Z"
 }

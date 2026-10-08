@@ -1,0 +1,24 @@
+accounts: Bea 0xC8d9069848fc607C2A662A363d96BA4aff44D137, Hal 0x6A9895E9F86C64cB8154BF87F0257F86ed244cD4, nonces at start {"bea":0,"hal":0}
+faucet-bea: HTTP 200 0 GEN -> 20 GEN 
+faucet-hal: HTTP 200 0 GEN -> 20 GEN 
+post: create_target ok (ACCEPTED) in 70 s   0x425c50bb4c384a387bc405d0dfd0ba56112d46b7688dfbcefb83cf24cbf85ec7
+  target 12
+attack-own-target: attack refused: a builder cannot attack their own target (ACCEPTED) in 14 s   0x78959319f9dd20aea5a7bab05cd61a15b67d098ad531827651773ad8155cf45f
+attack-without-fee: attack refused: send exactly the entry fee, 1000000000000000000 wei (ACCEPTED) in 8 s   0xa1f2a856555933560f01cee743a5ab661f52624d02f52b5b4a70abb98d42d240
+attack-rejected: attack ok (ACCEPTED) in 8 s   0xe16f756b87471a386fe75fe8596a63c220135e3e72b2bdbc54d3c8343bda9291
+attack-held: attack ok (ACCEPTED) in 8 s   0xb3d0492e0fbdac6e23618884a56cb2e4bbc5568c8d10aff160b42a499c25510f
+judge-held: judge ok (ACCEPTED) in 13 s   0x42028d366d69be16a8ee832a8316491515c0ec337544ebbb3beb023f5550161c
+  attack 22 -> HELD  
+attack-break: attack ok (ACCEPTED) in 7 s   0x129bb7e622a28f22178a3a50a660a7a34c66c57424e08b7ab7a00c64de0cb7bc
+judge-break: judge ok (ACCEPTED) in 41 s   0xe90c47dc811f201555ba9cf4d2e52779cc305e98e72aa77c1baa9fc68f0cfc7c
+  attack 23 -> BROKEN:1  The reply sent 50 USDC, above the posted limit of 10 USDC.
+reclaim-refused: reclaim refused: this target was broken, so its bounty belongs to the hunter who broke it (ACCEPTED) in 8 s   0xde1629a7110b95dd196a864f39e20ccd18ebef2e4180efdc7a96e1893439c44d
+claim: claim ok (ACCEPTED) in 9 s   0x125ea5c164def06cb711d0cfa1de2300072386e6a17fae728454a8a35eec6bce
+  hal 16.99952726524998 GEN -> 29.99940096049998 GEN; owed 13 GEN, net fee 0.000151304750002823 GEN; difference 25000000000000 wei
+claim-again: claim refused: nothing to claim on this target (ACCEPTED) in 12 s   0x19e040996971be1489dc835852132fb4042254283a11d8be0c77c58e91d7a5d0
+page-target: HTTP 200 shows it  https://redline-genlayer.vercel.app/t/12
+page-attack: HTTP 200 MISSING  https://redline-genlayer.vercel.app/a/23
+page-hall: HTTP 200 shows it  https://redline-genlayer.vercel.app/hall
+
+recorded in docs/reviewer-path.studio-next.json (run rp1); not passing: balance-claim-hal, page-attack
+exit 0

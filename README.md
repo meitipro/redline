@@ -45,8 +45,8 @@ Every number below comes from a file in this repository that was written by the 
 | Mutation testing: each defence broken on its own | **66 of 66** caught | [docs/MUTATIONS.md](docs/MUTATIONS.md) |
 | Deployed bytes read back with `gen_getContractCode` | identical to `contracts/redline.py`, lint clean | `python scripts/verify.py` |
 | Canary seed fields measured on the live runtime before use | datetime with microseconds, no tx hash | [docs/seed-probe.json](docs/seed-probe.json) |
-| Demo targets and real attacks | demo targets in all three modes, attacks judged on chain; see the log | [docs/seed.studio-next.json](docs/seed.studio-next.json) |
-| Reviewer's path from fresh accounts through the site's own signing code | run rp1 on the live site; see the record | [docs/reviewer-path.studio-next.json](docs/reviewer-path.studio-next.json) |
+| Demo targets and real attacks | Tollgate (action) held 3 of 3; Quill (secret) broken and claimed, 61 GEN; Ledgerly (scope) 1 rejected, 2 held; three weak practice targets left open 30 days for reviewers | [docs/seed.studio-next.json](docs/seed.studio-next.json) |
+| Reviewer's path from fresh accounts through the site's own signing code (run rp2) | 26 of 26 steps passed: faucet, post, top-up, 6 refusals read as refusals, rejected, held, break, void, claim of 16 GEN exact to the wei; both wallets reconcile to 0 wei over the run | [docs/reviewer-path.studio-next.json](docs/reviewer-path.studio-next.json) |
 
 The golden set was hashed and timestamped before the first run (`eval/golden.lock.json`); nothing was tuned against it.
 
