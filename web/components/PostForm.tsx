@@ -1,12 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+import { CONTRACT, readClient, retried } from '@/lib/genlayer-core.mjs';
+import { lineage, nextName, versionOf } from '@/lib/versions';
 
 import limits from '@/lib/contract.generated.json';
 import { gen, toWei } from '@/lib/format';
 import { harmfulWord, keysIn } from '@/lib/keyscan';
-import type { Kind, Mode } from '@/lib/types';
+import type { Kind, Mode, Target, TargetPage } from '@/lib/types';
 import { refreshReads, send, type TxState } from '@/lib/write';
 
 import { TxProgress } from './Actions';
@@ -48,6 +51,31 @@ export function PostForm() {
   const [fee, setFee] = useState('2');
   const [days, setDays] = useState(String(L.minLockDays));
   const [state, setState] = useState<TxState>({ phase: 'idle' });
+  const [from, setFrom] = useState<{ id: number; name: string; version: number } | null>(null);
+  const params = useSearchParams();
+
+  // "Post version N": prefill everything from the target being patched.
+  useEffect(() => {
+    const id = Number(params.get('from'));
+    if (!Number.isInteger(id) || id < 1) return;
+    (async () => {
+      const read = async <T,>(method: string, args: (number | string)[]) =>
+        JSON.parse(String(await retried(() => readClient().readContract({ address: CONTRACT, functionName: method, args }), 4))) as T;
+      const t = await read<Target & { found: boolean }>('get_target', [id]);
+      if (!t.found) return;
+      const all = (await read<TargetPage>('list_targets', ['', 0, 50])).items;
+      const line = lineage(t, all);
+      const latest = Math.max(...line.map((o) => versionOf(o.name)));
+      setName(nextName(t.name, latest));
+      setMode(t.mode);
+      setInstructions(t.instructions);
+      setRules(
+        t.rules.map((r) => ({ kind: r.kind, text: r.text, max_amount: r.max_amount ?? '', unit: r.unit ?? '', allowlist: (r.allowlist ?? []).join('\n') })),
+      );
+      setFee(String(Number(BigInt(t.entry_fee) / 10n ** 15n) / 1000));
+      setFrom({ id, name: t.name, version: latest + 1 });
+    })().catch(() => {});
+  }, [params]);
   const busy = state.phase === 'signing' || state.phase === 'deciding';
 
   const everything = [name, instructions, ...rules.map((r) => `${r.text} ${r.allowlist}`)].join('\n');
@@ -101,6 +129,13 @@ export function PostForm() {
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
       <div className="flex flex-col gap-6">
+        {from && (
+          <div className="c-note accent">
+            Version {from.version}, prefilled from <a className="underline" href={`/t/${from.id}`}>{from.name} (target #{from.id})</a>. Patch the instructions,
+            then post: the new target&apos;s page replays every break of the earlier versions, so you can check the patch holds.
+            Versions are linked when the same wallet posts them under the same name.
+          </div>
+        )}
         <div className="c-note">
           Everything on Redline is public. Post a <strong>test version</strong> of your instructions: never production text,
           never a real key. The form scans for key-shaped strings, and the contract refuses them again on chain.

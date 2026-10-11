@@ -5,11 +5,14 @@ import { notFound } from 'next/navigation';
 import { AttackBox, BuilderBox, ClaimBox, JudgeButton } from '@/components/Actions';
 import { CopyLink } from '@/components/CopyLink';
 import { Addr, AttemptRow, Empty, Monogram, ReadError, StatusBadge, Tx, WithSlots, ruleDetail } from '@/components/ui';
-import { latest, targetTxs } from '@/lib/explorer';
+import { allFailedRounds, latest, targetTxs } from '@/lib/explorer';
 import { day, dayTime, gen, plural } from '@/lib/format';
-import { allAttacks, getTarget, readError } from '@/lib/read';
+import { allAttacks, allTargets, getTarget, readError } from '@/lib/read';
 import { lockLeft } from '@/lib/target';
 import type { Attack, Target } from '@/lib/types';
+import { lineage, replays, versionOf } from '@/lib/versions';
+import { VersionPanel } from '@/components/Versions';
+import { BadgeBox } from '@/components/BadgeBox';
 
 export const revalidate = 20;
 
@@ -48,7 +51,12 @@ export default async function TargetPage({ params }: Props) {
       </div>
     );
   }
+  const line = lineage(t, await allTargets(''));
+  const byTarget = new Map<number, Attack[]>([[t.id, attacks]]);
+  for (const o of line) if (o.id !== t.id) byTarget.set(o.id, await allAttacks(o.id));
+  const replayed = replays(t, line, byTarget);
   const txs = await targetTxs(id);
+  const rounds = await allFailedRounds();
   const posted = latest(txs, 'create_target');
   const queued = attacks.filter((a) => a.status === 'QUEUED');
   const record = attacks.filter((a) => a.status !== 'QUEUED');
@@ -118,13 +126,15 @@ export default async function TargetPage({ params }: Props) {
             </div>
           </section>
 
+          <VersionPanel t={t} line={line} replays={replayed} version={line.findIndex((o) => o.id === t.id) + 1} />
+
           {queued.length > 0 && (
             <section>
               <p className="c-eyebrow">Queued, waiting for a run</p>
               <div className="c-card mt-3 divide-y divide-[var(--line)]">
                 {queued.map((a) => (
                   <div key={a.id}>
-                    <AttemptRow a={a} />
+                    <AttemptRow a={a} rounds={rounds[String(a.id)]?.length ?? 0} />
                     <div className="px-4 pb-4">
                       <JudgeButton attack={a} targetOpen={t.status === 'OPEN'} />
                     </div>
@@ -140,8 +150,8 @@ export default async function TargetPage({ params }: Props) {
               {record.length ? record.map((a) => <AttemptRow key={a.id} a={a} />) : <div className="p-4"><Empty>No attempt has been judged yet.</Empty></div>}
             </div>
             <p className="c-faint mt-2 text-[12.5px]">
-              An attack whose break did not reproduce across the validators&apos; models never reaches the record: the round
-              ends without agreement, nothing is stored, and the attack stays queued.
+              An attack whose break did not reproduce across the validators&apos; models is never judged: its round ends without
+              agreement, nothing is stored, nobody is paid, and it stays queued, marked No agreement.
             </p>
           </section>
         </div>
@@ -184,7 +194,8 @@ export default async function TargetPage({ params }: Props) {
             <AttackBox target={t} />
           </div>
           <ClaimBox target={t} />
-          <BuilderBox target={t} />
+          <BuilderBox target={t} nextVersion={line.length ? versionOf(line[line.length - 1].name) + 1 : 2} />
+          <BadgeBox target={t} />
         </aside>
       </div>
     </div>

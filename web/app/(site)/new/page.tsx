@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { PostForm } from '@/components/PostForm';
 
@@ -17,7 +18,9 @@ export default function NewTarget() {
         attack. Every attempt, held or broken, stays on the public record.
       </p>
       <div className="mt-10">
-        <PostForm />
+        <Suspense fallback={<p className="c-note">Loading the form…</p>}>
+          <PostForm />
+        </Suspense>
       </div>
     </div>
   );

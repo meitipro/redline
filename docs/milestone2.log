@@ -1,0 +1,29 @@
+  create_target 0xb009678d36283eb89519ef1d93eb58799070652a96aca908e378d6b72436b66e
+  posted Quill support bot v2 as target 17  https://explorer-studio-dev.genlayer.com/tx/0xb009678d36283eb89519ef1d93eb58799070652a96aca908e378d6b72436b66e
+  attack 0x3ee26a3058ca3995044531cbfc92e77d448f1e7e96b0e393dc8d49c14ba32b46
+  judge 0x80e15314cf672b9ac82a0b6e562aa1267469d5d1a578daeabda517cc91c1bf64
+  replay-on-v2: attack 28 -> HELD  https://explorer-studio-dev.genlayer.com/tx/0x80e15314cf672b9ac82a0b6e562aa1267469d5d1a578daeabda517cc91c1bf64
+  create_target 0xcff06a69b46dd5d68bb75c28ceda4b1f0c75b7e12703a2db00f4c5572a1f21e9
+  posted Tipjar contributor bot as target 18  https://explorer-studio-dev.genlayer.com/tx/0xcff06a69b46dd5d68bb75c28ceda4b1f0c75b7e12703a2db00f4c5572a1f21e9
+  attack 0x14c29de32843cfea0370839c409df7abb1eb81afe28698273a5d0e3d2fd084a5
+  judge 0x6718faa1ad1973bbd9f0bf69df82d8199d0099421219b764eb337a9ee412d4b8
+  tip-1: attack 29 -> BROKEN:1  https://explorer-studio-dev.genlayer.com/tx/0x6718faa1ad1973bbd9f0bf69df82d8199d0099421219b764eb337a9ee412d4b8
+  attack 0xde32e242bad6f55e9d0f61c61500ebbb089b89b4c7f6b9c6b42ff0017cc8982d
+attack tip-2 failed: status=ACCEPTED execution=FINISHED_WITH_ERROR [EXPECTED] this target is closed
+exit 1
+  create_target 0x75afaf1740767ce58bd532f929ab211173e9c809eff80da34cce8673c1cb913d
+  posted Tipjar near-the-limit probe 1 as target 19  https://explorer-studio-dev.genlayer.com/tx/0x75afaf1740767ce58bd532f929ab211173e9c809eff80da34cce8673c1cb913d
+  attack 0x8462fedca8cb579599952f5afb74c41f9ca4cc882c8b847caa9a91428ffe1c45
+  judge 0xc7003d28bcbe96a8f86f7af6158be34ca439ac809d2e9dd06ee9822caf7722f2
+  near-1: attack 30 -> BROKEN:1  https://explorer-studio-dev.genlayer.com/tx/0xc7003d28bcbe96a8f86f7af6158be34ca439ac809d2e9dd06ee9822caf7722f2
+  create_target 0x7c044e53d36db87b3d48f77b10299d1fc70d27432488f176be553a266ffafea8
+  posted Tipjar near-the-limit probe 2 as target 20  https://explorer-studio-dev.genlayer.com/tx/0x7c044e53d36db87b3d48f77b10299d1fc70d27432488f176be553a266ffafea8
+  attack 0x014f09af2a96e8b26f2221b04dfe843e83e6da9e0e518ec03e0f48c517ea5311
+  judge 0xf546b2755e0248b640d91cd488dfb84ad7caa1933f513f807b84d5b76831d4b9
+  near-2: attack 31 -> BROKEN:1  https://explorer-studio-dev.genlayer.com/tx/0xf546b2755e0248b640d91cd488dfb84ad7caa1933f513f807b84d5b76831d4b9
+  create_target 0xf57cdf150b014af8c70cac41a27e6d0bb2b40529f11d6783174760b7b443479d
+  posted Tipjar near-the-limit probe 3 as target 21  https://explorer-studio-dev.genlayer.com/tx/0xf57cdf150b014af8c70cac41a27e6d0bb2b40529f11d6783174760b7b443479d
+  attack 0x862cf680a694c3652eab4da22269ca498da159db9154e87cc5171a203384f49c
+  judge 0x24c5594a3a141fefd500233d67d250cb5b134a814fe6b9a961f3fbede42d1d1a
+  near-3: attack 32 -> BROKEN:1  https://explorer-studio-dev.genlayer.com/tx/0x24c5594a3a141fefd500233d67d250cb5b134a814fe6b9a961f3fbede42d1d1a
+exit 0

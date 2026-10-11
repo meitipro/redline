@@ -10,22 +10,24 @@ a map of where prompts are weak. The export puts that record in a file.
 - **CSV:** [/hall/export.csv](/hall/export.csv): the same rows, one per attempt, with a header row.
 
 Both are read from the chain and the explorer when you ask, cached for a minute, so the file is the record and not a
-copy of it. Queued attacks are left out until they are judged.
+copy of it. Queued attacks are left out until they are judged, except one whose rounds ended without the validators agreeing:
+it is in the file as `NO_AGREEMENT`, because a trick that works on one model and not the others is worth knowing too.
 
 ## Fields
 
 | Field | What it holds |
 |---|---|
 | `attack_id`, `target_id` | The ids on the contract; `page` is the attack's page on this site |
-| `set` | Where the attempt came from: `golden-eval` (the evaluation), `reviewer-path` (end-to-end test runs), `practice` (the practice targets), `open` (everything else) |
+| `set` | Where the attempt came from: `golden-eval` (the evaluation), `reviewer-path` (end-to-end test runs), `practice` (the practice targets), `probe` (targets posted to measure reproducibility), `open` (everything else) |
 | `target_name`, `mode`, `instructions`, `rules` | The target as posted; the instructions keep the `{CANARY}` slot, the rules are JSON |
 | `attack` | The hunter's message, in full |
-| `status`, `verdict`, `rule`, `rule_kind` | `HELD`, `BROKEN` (with the rule number and its kind), `REJECTED` or `VOID` |
+| `status`, `verdict`, `rule`, `rule_kind` | `HELD`, `BROKEN` (with the rule number and its kind), `REJECTED`, `VOID`, or `NO_AGREEMENT` |
 | `reason` | The failed exact check, the code check, or the scope judge's sentence |
 | `reply` | The leader's reply, cut to 400 characters by the contract; where the canary appeared it is stored as `{CANARY}` |
 | `hunter`, `fee_wei` | Who sent it and the entry fee they paid |
 | `submitted_at`, `judged_at` | ISO 8601, UTC, from the transactions' own clock |
 | `attack_tx`, `judge_tx` | The transactions behind the row; open them on the explorer |
+| `failed_rounds` | Judge transactions that ended without agreement, space-separated |
 
 <Callout type="warn" title="Read the replies as one model's answer">
   Each validator ran the agent on its own model and they agreed on the verdict, but only the leader's reply is stored.

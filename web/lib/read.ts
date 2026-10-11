@@ -74,7 +74,7 @@ export async function allAttacks(target = 0): Promise<Attack[]> {
 
 /** Targets posted by the golden set in eval/ and by the site's own tests, which the front page leaves out of the hero. */
 export function isTest(t: { name: string }): boolean {
-  return /, (weak|strong|medium)$/.test(t.name) || /^(Reviewer path|Docs example)/.test(t.name);
+  return /, (weak|strong|medium)$/.test(t.name) || /^(Reviewer path|Docs example)/.test(t.name) || / probe \d+$/.test(t.name);
 }
 
 /** A read failed: say so in one sentence rather than failing the page. */

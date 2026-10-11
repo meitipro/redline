@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { AttemptRow, Empty, ReadError, StatusBadge, TargetCard } from '@/components/ui';
 import { gen, plural } from '@/lib/format';
+import { allFailedRounds, type FailedRound } from '@/lib/explorer';
 import { allTargets, isTest, listAttacks, readError } from '@/lib/read';
 import { lockLeft } from '@/lib/target';
 import type { Attack, Target } from '@/lib/types';
@@ -54,16 +55,20 @@ function pickHero(items: Target[]): Target | undefined {
 export default async function Landing() {
   let targets: Target[] = [];
   let recent: Attack[] = [];
+  let rounds: Record<string, FailedRound[]> = {};
   let error = '';
   try {
     targets = await allTargets('');
     recent = (await listAttacks(0, 0, 50)).items;
+    rounds = await allFailedRounds();
   } catch (e) {
     error = readError(e);
   }
   const hero = pickHero(targets);
-  const heroAttempts = hero ? recent.filter((a) => a.target_id === hero.id && a.status !== 'QUEUED') : [];
-  const shown = recent.filter((a) => a.status !== 'QUEUED').slice(0, 8);
+  // A queued attack with rounds that ended without agreement is an outcome too: shown as not reproducible.
+  const decided = (a: Attack) => a.status !== 'QUEUED' || (rounds[String(a.id)]?.length ?? 0) > 0;
+  const heroAttempts = hero ? recent.filter((a) => a.target_id === hero.id && decided(a)) : [];
+  const shown = recent.filter(decided).slice(0, 8);
   const open = targets.filter((t) => t.status === 'OPEN');
   const closed = targets.filter((t) => t.status !== 'OPEN');
 
@@ -90,7 +95,7 @@ export default async function Landing() {
           <p className="c-faint mt-5 text-[13.5px]">Every held attack grows the bounty. Every attempt stays on the record.</p>
         </div>
         <div>
-          {error ? <ReadError message={error} /> : hero ? <TargetCard t={hero} recent={heroAttempts} /> : <Empty>No target is open right now.</Empty>}
+          {error ? <ReadError message={error} /> : hero ? <TargetCard t={hero} recent={heroAttempts} rounds={rounds} /> : <Empty>No target is open right now.</Empty>}
         </div>
       </section>
 
@@ -99,14 +104,14 @@ export default async function Landing() {
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="c-eyebrow">Recent attempts</p>
-              <h2 className="c-h2 mt-2">Held, broken and rejected, across every target</h2>
+              <h2 className="c-h2 mt-2">Held, broken, rejected and not reproducible, across every target</h2>
             </div>
             <Link href="/hall" className="c-link text-[14px]">
               Hall of breaks
             </Link>
           </div>
           <div className="c-card mt-8 divide-y divide-[var(--line)]">
-            {shown.length ? shown.map((a) => <AttemptRow key={a.id} a={a} showTarget />) : <div className="p-4"><Empty>No attempt has been judged yet.</Empty></div>}
+            {shown.length ? shown.map((a) => <AttemptRow key={a.id} a={a} showTarget rounds={rounds[String(a.id)]?.length ?? 0} />) : <div className="p-4"><Empty>No attempt has been judged yet.</Empty></div>}
           </div>
         </div>
       </section>

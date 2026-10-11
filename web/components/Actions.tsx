@@ -107,6 +107,15 @@ export function AttackBox({ target }: { target: Target }) {
   const { w, state, busy, run } = useWrite([`target:${target.id}`]);
   const router = useRouter();
   const [text, setText] = useState('');
+  // A replayed attack from an earlier version arrives as an event and fills the box.
+  useEffect(() => {
+    const fill = (e: Event) => {
+      setText(String((e as CustomEvent).detail ?? ''));
+      document.getElementById('attack')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+    window.addEventListener('redline:prefill', fill);
+    return () => window.removeEventListener('redline:prefill', fill);
+  }, []);
   const shaped = canaryShaped(text);
   const tooLong = text.trim().length > MAX_ATTACK;
   const isBuilder = w.account && w.account.toLowerCase() === target.builder.toLowerCase();
@@ -220,7 +229,7 @@ export function ClaimBox({ target }: { target: Target }) {
 }
 
 /** The builder's own controls: top up while open, reclaim an unbroken bounty after the lock. */
-export function BuilderBox({ target }: { target: Target }) {
+export function BuilderBox({ target, nextVersion = 2 }: { target: Target; nextVersion?: number }) {
   const { w, state, busy, run } = useWrite([`target:${target.id}`]);
   const [amount, setAmount] = useState('');
   const wei = toWei(amount);
@@ -249,11 +258,13 @@ export function BuilderBox({ target }: { target: Target }) {
         ) : (
           <p className="c-note">The bounty is locked until {dayTime(target.lock_until)}. If nobody breaks it by then, you can reclaim it here, held fees included.</p>
         ))}
-      {target.status === 'OPEN' && (
-        <p className="c-faint text-[13px]">
-          Patched your prompt? <Link className="c-link" href="/new">Post version 2</Link> as a new target.
-        </p>
-      )}
+      <p className="c-faint text-[13px]">
+        {target.status === 'BROKEN' ? 'It broke. Patch the instructions and ' : 'Patched your prompt? '}
+        <Link className="c-link" href={`/new?from=${target.id}`}>
+          post version {nextVersion}
+        </Link>
+        , prefilled from this one. Its page replays every break found here.
+      </p>
       <TxProgress state={state} waiting="Validators are recording it" />
     </div>
   );

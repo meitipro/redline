@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache';
 
-import { attackTxs, latest } from './explorer';
+import { allFailedRounds, attackTxs, latest } from './explorer';
 import { DEPLOYMENT } from './genlayer-core.mjs';
 import { allAttacks, allTargets } from './read';
 
@@ -36,18 +36,21 @@ export type Row = {
   judged_at: string;
   attack_tx: string;
   judge_tx: string;
+  /** Judge rounds that ended without the validators agreeing, space-separated. */
+  failed_rounds: string;
   page: string;
 };
 
 export const FIELDS: (keyof Row)[] = [
   'attack_id', 'set', 'target_id', 'target_name', 'mode', 'instructions', 'rules', 'attack', 'status', 'verdict', 'rule',
-  'rule_kind', 'reason', 'reply', 'hunter', 'fee_wei', 'submitted_at', 'judged_at', 'attack_tx', 'judge_tx', 'page',
+  'rule_kind', 'reason', 'reply', 'hunter', 'fee_wei', 'submitted_at', 'judged_at', 'attack_tx', 'judge_tx', 'failed_rounds', 'page',
 ];
 
 function setOf(name: string): string {
   if (/, (weak|strong|medium)$/.test(name)) return 'golden-eval';
   if (name.startsWith('Reviewer path')) return 'reviewer-path';
   if (name.startsWith('Practice target')) return 'practice';
+  if (/ probe \d+$/.test(name)) return 'probe';
   return 'open';
 }
 
@@ -55,7 +58,9 @@ const iso = (s: number) => (s ? new Date(s * 1000).toISOString() : '');
 
 async function build(): Promise<Row[]> {
   const targets = new Map((await allTargets('')).map((t) => [t.id, t]));
-  const attacks = (await allAttacks(0)).filter((a) => a.status !== 'QUEUED').sort((a, b) => a.id - b.id);
+  const rounds = await allFailedRounds();
+  // A queued attack with rounds that ended without agreement is in the record as NO_AGREEMENT.
+  const attacks = (await allAttacks(0)).filter((a) => a.status !== 'QUEUED' || rounds[String(a.id)]?.length).sort((a, b) => a.id - b.id);
   const rows: Row[] = [];
   for (const a of attacks) {
     const t = targets.get(a.target_id);
@@ -70,7 +75,7 @@ async function build(): Promise<Row[]> {
       instructions: t.instructions,
       rules: JSON.stringify(t.rules.map(({ number, kind, text, max_amount, allowlist, unit }) => ({ number, kind, text, max_amount, allowlist, unit }))),
       attack: a.text,
-      status: a.status,
+      status: a.status === 'QUEUED' ? 'NO_AGREEMENT' : a.status,
       verdict: a.verdict,
       rule: a.rule,
       rule_kind: a.rule ? (t.rules.find((r) => r.number === a.rule)?.kind ?? '') : '',
@@ -82,6 +87,7 @@ async function build(): Promise<Row[]> {
       judged_at: iso(a.judged_at),
       attack_tx: latest(txs, 'attack')?.hash ?? '',
       judge_tx: latest(txs, 'judge')?.hash ?? '',
+      failed_rounds: (rounds[String(a.id)] ?? []).map((r) => r.hash).join(' '),
       page: `/a/${a.id}`,
     });
   }

@@ -15,7 +15,9 @@ import { CONTRACT, EXPLORER } from './genlayer-core.mjs';
  */
 
 export type ChainTx = { method: string; hash: string; from: string; created: string };
-export type TxIndex = { targets: Record<string, ChainTx[]>; attacks: Record<string, ChainTx[]> };
+/** A judge round that ended without a verdict: the validators could not agree, or the round timed out. */
+export type FailedRound = { hash: string; status: string; created: string; from: string };
+export type TxIndex = { targets: Record<string, ChainTx[]>; attacks: Record<string, ChainTx[]>; failedRounds: Record<string, FailedRound[]> };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -64,8 +66,35 @@ function succeeded(tx: any): { ok: boolean; returned?: string } {
 
 const BY_TARGET = new Set(['top_up', 'claim', 'reclaim']);
 
+/** Statuses after which a transaction will not change again. */
+const FINAL = new Set(['ACCEPTED', 'FINALIZED', 'UNDETERMINED', 'LEADER_TIMEOUT', 'VALIDATORS_TIMEOUT', 'CANCELED']);
+
+/** A refusal is a decided outcome (the contract said no), not a round without agreement. */
+function refused(tx: any): boolean {
+  const leader = leaderOf(tx);
+  const result = leader?.result;
+  if (typeof result === 'string') {
+    try {
+      const bytes = Uint8Array.from(Buffer.from(result, 'base64'));
+      return bytes[0] === 1 || bytes[0] === 2;
+    } catch {
+      return false;
+    }
+  }
+  const kind = String(result?.status ?? '').toLowerCase();
+  return kind === 'rollback' || kind === 'user_error';
+}
+
+/** What happened to a round with no verdict, in words a page can show. */
+function roundStatus(tx: any): string {
+  const status = String(tx?.status ?? '').toUpperCase();
+  const outcome = String(tx?.consensus_data?.final_outcome ?? tx?.result_name ?? tx?.lifecycle?.outcome ?? '').toUpperCase();
+  if (status === 'UNDETERMINED' || outcome === 'UNDETERMINED') return 'UNDETERMINED';
+  return outcome && outcome !== status ? `${status} (${outcome})` : status;
+}
+
 async function scan(): Promise<TxIndex> {
-  const index: TxIndex = { targets: {}, attacks: {} };
+  const index: TxIndex = { targets: {}, attacks: {}, failedRounds: {} };
   for (let page = 1; page <= 30; page++) {
     const url = `${EXPLORER}/api/transactions?address=${CONTRACT}&limit=100&page=${page}`;
     const response = await fetch(url, { cache: 'no-store' });
@@ -75,7 +104,14 @@ async function scan(): Promise<TxIndex> {
       const call = tx?.data?.calldata ? decode(tx.data.calldata) : null;
       if (!call) continue;
       const done = succeeded(tx);
-      if (!done.ok) continue;
+      if (!done.ok) {
+        // A judge that ended without a returned verdict is kept, so the page can say the break did not reproduce.
+        const status = String(tx?.status ?? '').toUpperCase();
+        if (call.method === 'judge' && call.args.length && FINAL.has(status) && !refused(tx)) {
+          (index.failedRounds[String(call.args[0])] ??= []).push({ hash: tx.hash, status: roundStatus(tx), created: String(tx.created_at ?? ''), from: String(tx.from_address ?? '') });
+        }
+        continue;
+      }
       const row = { method: call.method, hash: tx.hash, from: String(tx.from_address ?? ''), created: String(tx.created_at ?? '') };
       const id = done.returned && /^\d+$/.test(done.returned) ? done.returned : '';
       if (call.method === 'create_target' && id) (index.targets[id] ??= []).push(row);
@@ -114,4 +150,22 @@ export async function attackTxs(id: number): Promise<ChainTx[]> {
 /** The newest successful transaction of one kind, optionally from one address. */
 export function latest(txs: ChainTx[], method: string, from = ''): ChainTx | undefined {
   return txs.find((t) => t.method === method && (!from || t.from.toLowerCase() === from.toLowerCase()));
+}
+
+/** Judge rounds on one attack that ended without a verdict: a break that did not reproduce, so far. */
+export async function failedRounds(attackId: number): Promise<FailedRound[]> {
+  try {
+    return (await cachedScan()).failedRounds[String(attackId)] ?? [];
+  } catch {
+    return [];
+  }
+}
+
+/** Every attack with at least one round that ended without a verdict. */
+export async function allFailedRounds(): Promise<Record<string, FailedRound[]>> {
+  try {
+    return (await cachedScan()).failedRounds;
+  } catch {
+    return {};
+  }
 }

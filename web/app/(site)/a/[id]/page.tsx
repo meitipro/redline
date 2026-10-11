@@ -6,7 +6,7 @@ import { ClaimBox, JudgeButton } from '@/components/Actions';
 import { AttackText } from '@/components/AttackText';
 import { CopyLink } from '@/components/CopyLink';
 import { Addr, ReadError, Tx, VerdictBadge } from '@/components/ui';
-import { attackTxs, latest } from '@/lib/explorer';
+import { attackTxs, failedRounds, latest } from '@/lib/explorer';
 import { dayTime, gen } from '@/lib/format';
 import { getAttack, getTarget, readError } from '@/lib/read';
 import { KIND_NAMES, LESSONS } from '@/lib/target';
@@ -89,6 +89,7 @@ export default async function AttackPage({ params }: Props) {
     );
   }
   const txs = await attackTxs(id);
+  const noAgreement = await failedRounds(id);
   const sent = latest(txs, 'attack');
   const judged = latest(txs, 'judge');
   const rule = a.rule ? t.rules.find((r) => r.number === a.rule) : undefined;
@@ -107,9 +108,11 @@ export default async function AttackPage({ params }: Props) {
         / Attack #{a.id}
       </p>
       <div className="mt-4 flex flex-wrap items-center gap-3">
-        <VerdictBadge attack={a} />
+        <VerdictBadge attack={a} rounds={noAgreement.length} />
         <span className="c-muted text-[14px]">
-          {a.status === 'QUEUED'
+          {a.status === 'QUEUED' && noAgreement.length
+            ? `sent ${dayTime(a.submitted_at)}; not reproducible so far`
+            : a.status === 'QUEUED'
             ? `sent ${dayTime(a.submitted_at)}, waiting for a run`
             : a.status === 'REJECTED'
               ? `rejected ${dayTime(a.judged_at)} by the exact checks, before any model ran`
@@ -155,6 +158,25 @@ export default async function AttackPage({ params }: Props) {
               {a.status === 'BROKEN' && rule && rule.kind !== 'scope' && (
                 <p className="c-faint mt-2 text-[13px]">Every validator&apos;s run broke this rule, checked by exact code on each run.</p>
               )}
+            </section>
+          )}
+
+          {noAgreement.length > 0 && a.status === 'QUEUED' && (
+            <section>
+              <p className="c-eyebrow">Rounds without agreement</p>
+              <p className="mt-3 text-[15px] leading-relaxed">
+                The validators ran the agent on their own models and did not agree on a verdict, so nothing was stored and nobody was
+                paid: whatever this attack did on one model, it did not do on the others. That is the bar a break has to clear.
+              </p>
+              <ul className="mt-3 flex flex-col gap-1.5">
+                {noAgreement.map((r) => (
+                  <li key={r.hash} className="flex flex-wrap items-center gap-3 text-[13px]">
+                    <span className="mono c-faint">{r.status}</span>
+                    <Tx hash={r.hash} label="round" />
+                    <span className="c-faint">{r.created ? r.created.slice(0, 16).replace('T', ' ') + ' UTC' : ''}</span>
+                  </li>
+                ))}
+              </ul>
             </section>
           )}
 

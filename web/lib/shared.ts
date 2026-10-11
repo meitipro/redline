@@ -11,6 +11,9 @@ export const gitConfig = {
   branch: 'main',
 };
 
+/** The public site, for links pasted outside it (badges). */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://redline-genlayer.vercel.app';
+
 export const REPO_URL = `https://github.com/${gitConfig.user}/${gitConfig.repo}`;
 
 const getContentUrl = createGetUrl(docsContentRoute);

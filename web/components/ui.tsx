@@ -38,8 +38,13 @@ export function Addr({ address }: { address: string }) {
   );
 }
 
-/** Red for a break, grey for everything else. */
-export function VerdictBadge({ attack }: { attack: Pick<Attack, 'status' | 'rule'> }) {
+/**
+ * Red for a break, grey for everything else. A queued attack whose rounds ended
+ * without a verdict reads "No agreement": the break did not reproduce across the
+ * validators' models, so nothing was stored and nobody was paid.
+ */
+export function VerdictBadge({ attack, rounds = 0 }: { attack: Pick<Attack, 'status' | 'rule'>; rounds?: number }) {
+  if (attack.status === 'QUEUED' && rounds > 0) return <span className="c-verdict quiet">No agreement</span>;
   const cls = attack.status === 'BROKEN' ? 'broken' : attack.status === 'HELD' ? 'held' : 'quiet';
   return <span className={`c-verdict ${cls}`}>{verdictLabel(attack)}</span>;
 }
@@ -87,7 +92,7 @@ export function ruleDetail(rule: Rule): string {
 }
 
 /** The live target card on the landing page: bounty, held count and lock, the three things a hunter decides on. */
-export function TargetCard({ t, recent }: { t: Target; recent: Attack[] }) {
+export function TargetCard({ t, recent, rounds = {} }: { t: Target; recent: Attack[]; rounds?: Record<string, unknown[]> }) {
   return (
     <Link href={`/t/${t.id}`} className="c-card block p-5 transition-colors hover:border-[var(--line-strong)]">
       <div className="flex items-start gap-3">
@@ -125,7 +130,7 @@ export function TargetCard({ t, recent }: { t: Target; recent: Attack[] }) {
         <div className="mt-5 flex flex-col gap-2 border-t border-[var(--line)] pt-4">
           {recent.slice(0, 3).map((a) => (
             <div key={a.id} className="flex items-start gap-3 text-[13.5px]">
-              <VerdictBadge attack={a} />
+              <VerdictBadge attack={a} rounds={rounds[String(a.id)]?.length ?? 0} />
               <span className="c-muted min-w-0 flex-1 truncate">&ldquo;{a.text}&rdquo;</span>
             </div>
           ))}
@@ -136,11 +141,11 @@ export function TargetCard({ t, recent }: { t: Target; recent: Attack[] }) {
 }
 
 /** One attempt in a record: verdict, the attack behind a filter, when, and a link to the attack page. */
-export function AttemptRow({ a, showTarget = false }: { a: Attack; showTarget?: boolean }) {
+export function AttemptRow({ a, showTarget = false, rounds = 0 }: { a: Attack; showTarget?: boolean; rounds?: number }) {
   return (
     <div className="flex flex-col gap-1.5 px-4 py-3">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <VerdictBadge attack={a} />
+        <VerdictBadge attack={a} rounds={rounds} />
         {showTarget && (
           <Link href={`/t/${a.target_id}`} className="font-medium hover:underline">
             {a.target_name}
@@ -154,6 +159,11 @@ export function AttemptRow({ a, showTarget = false }: { a: Attack; showTarget?: 
         </Link>
       </div>
       <AttackText text={a.text} clamp />
+      {a.status === 'QUEUED' && rounds > 0 && (
+        <p className="c-faint text-[12.5px]">
+          Not reproducible so far: {rounds === 1 ? 'one round' : `${rounds} rounds`} ended without the validators agreeing. Nothing was stored and nobody was paid.
+        </p>
+      )}
     </div>
   );
 }
