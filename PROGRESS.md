@@ -12,3 +12,4 @@ One line per step, in order.
 - 2026-10-03 Seeded Tollgate, Quill and Ledgerly with real attacks; Quill broke and was claimed (`docs/seed.studio-next.json`).
 - 2026-10-03 Reviewer path rp1 on the live site: two steps failed in the script's own checks (fee reconciliation counted an uncharged message term; page check missed React's `<!-- -->` markers). Both fixed in `web/scripts/reviewer-path.mjs`.
 - 2026-10-08 Three weak practice targets with 30-day locks, so reviewers can walk a break and a claim; reviewer path rp2 from fresh accounts; submission text written from the records.
+- 2026-10-11 Closeout c1: five unbroken golden targets reclaimed (33 GEN), golden bounties and refunds claimed (20 GEN), 3 refusals; 23/23 steps, 4 wallets reconcile to 0 wei. Hall of breaks export at /hall/export.json and .csv, with a docs page and a runnable example.

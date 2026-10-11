@@ -25,8 +25,9 @@ and is stored as written. That run's canary is never used again, so nothing is l
 **The content policy is a word list.** It refuses obvious harmful targets and blurs obvious harmful attack text. It is
 coarse in both directions.
 
-**Reclaim waits for the lock.** A bounty is locked for at least seven days, so the reclaim path on the live contract
-can only be exercised once a lock has ended. It is covered by the offline test suite and by mutation testing.
+**Reclaim waits for the lock.** A bounty is locked for at least seven days, so a builder waits a week before an
+unbroken bounty comes back. The first reclaims on the live contract ran on 2026-10-11, once the evaluation's locks
+ended (`docs/closeout.studio-next.json`).
 
 **Studio Next is a test network.** GEN here is test GEN from the faucet. The RPC rate-limits each IP, so the site caches
 reads for 20 seconds and drops the cache after each write.

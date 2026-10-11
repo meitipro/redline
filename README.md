@@ -46,6 +46,8 @@ Every number below comes from a file in this repository that was written by the 
 | Deployed bytes read back with `gen_getContractCode` | identical to `contracts/redline.py`, lint clean | `python scripts/verify.py` |
 | Canary seed fields measured on the live runtime before use | datetime with microseconds, no tx hash | [docs/seed-probe.json](docs/seed-probe.json) |
 | Demo targets and real attacks | Tollgate (action) held 3 of 3; Quill (secret) broken and claimed, 61 GEN; Ledgerly (scope) 1 rejected, 2 held; three weak practice targets left open 30 days for reviewers | [docs/seed.studio-next.json](docs/seed.studio-next.json) |
+| Closeout after the first locks ended (2026-10-11): 5 reclaims paying 33 GEN, every bounty and refund the evaluation left owed claimed, 3 refusals | 23 of 23 steps; 4 wallets reconcile to 0 wei | [docs/closeout.studio-next.json](docs/closeout.studio-next.json) |
+| Hall of breaks export: every judged attempt as JSON and CSV, with its transactions | 27 attempts at first export | [/hall/export.json](https://redline-genlayer.vercel.app/hall/export.json) |
 | Reviewer's path from fresh accounts through the site's own signing code (run rp2) | 26 of 26 steps passed: faucet, post, top-up, 6 refusals read as refusals, rejected, held, break, void, claim of 16 GEN exact to the wei; both wallets reconcile to 0 wei over the run | [docs/reviewer-path.studio-next.json](docs/reviewer-path.studio-next.json) |
 
 The golden set was hashed and timestamped before the first run (`eval/golden.lock.json`); nothing was tuned against it.
@@ -84,8 +86,8 @@ only addresses are ever printed. No key exists on the site's server: every write
 - Instructions and attack share one prompt, both fenced; role separation a chat API gives is not modelled.
 - A round without agreement leaves the attack queued, and anyone may run it again.
 - The content policy is a word list: coarse in both directions.
-- Bounties lock for at least seven days, so `reclaim` on the live contract can only run once a lock ends. It is covered
-  by the offline suite and mutation testing.
+- Bounties lock for at least seven days, so a builder waits a week before an unbroken bounty can come back. The first
+  reclaims ran on 2026-10-11, once the evaluation's locks ended.
 
 Full list: [Limitations](web/content/docs/more/limitations.mdx).
 

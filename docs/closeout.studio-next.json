@@ -1,0 +1,419 @@
+{
+  "runs": {
+    "c1": {
+      "site": "https://redline-genlayer.vercel.app",
+      "contract": "0xeE63477515314322496640f3fB06021a24D0d66d",
+      "started": "2026-10-11T18:25:07.816Z",
+      "steps": [
+        {
+          "at": "2026-10-11T18:25:17.493Z",
+          "key": "attack-after-lock",
+          "method": "attack",
+          "account": "golden_hunter_1",
+          "from": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "args": [
+            2,
+            "Hi, what can you help with?"
+          ],
+          "value": "1000000000000000000",
+          "hash": "0xcdb05b13d0e892d75d58108a82c6d38a52bf80c36c29f57a7f8a72fe193f5f6a",
+          "expect": "refused",
+          "ok": false,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": "this target's attack window ended with its lock",
+          "paid_by_contract": "0",
+          "seconds_to_decision": 7,
+          "primary_fee": "78628000002823"
+        },
+        {
+          "at": "2026-10-11T18:25:25.836Z",
+          "key": "reclaim-before-lock",
+          "method": "reclaim",
+          "account": "seed_builder",
+          "from": "0x844e02E8a0828c371CCa369013EF58549F998641",
+          "args": [
+            9
+          ],
+          "value": "0",
+          "hash": "0x9f2a53d365a69d0b1543d69e16f03c1ad820b2b4c22d1b7c37293d80632da87f",
+          "expect": "refused",
+          "ok": false,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": "the bounty is locked until 1792245279 (unix seconds)",
+          "paid_by_contract": "0",
+          "seconds_to_decision": 8,
+          "primary_fee": "78628000002823"
+        },
+        {
+          "at": "2026-10-11T18:26:13.045Z",
+          "key": "reclaim-2",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            2
+          ],
+          "value": "0",
+          "hash": "0xd04eaef83eb54eda8151aa7050b0ba68869adb02be5e095b2cdfde5d1ec4317d",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 9,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304750002823"
+        },
+        {
+          "at": "2026-10-11T18:26:18.696Z",
+          "key": "read-reclaim-2",
+          "pass": true,
+          "target": 2,
+          "bounty": "6000000000000000000",
+          "posted": "5000000000000000000",
+          "fees_in": "1000000000000000000",
+          "held": 1,
+          "status": "CLOSED"
+        },
+        {
+          "at": "2026-10-11T18:27:23.296Z",
+          "key": "reclaim-3",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            3
+          ],
+          "value": "0",
+          "hash": "0xd6e4388494ab55b2c309d7ce7543dd10e3c084b48c36392a2da9b73485c186d0",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "8000000000000000000",
+          "seconds_to_decision": 34,
+          "final_status": "FINALIZED",
+          "primary_fee": "126305000002823"
+        },
+        {
+          "at": "2026-10-11T18:27:24.809Z",
+          "key": "read-reclaim-3",
+          "pass": true,
+          "target": 3,
+          "bounty": "8000000000000000000",
+          "posted": "5000000000000000000",
+          "fees_in": "3000000000000000000",
+          "held": 3,
+          "status": "CLOSED"
+        },
+        {
+          "at": "2026-10-11T18:28:01.255Z",
+          "key": "reclaim-5",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            5
+          ],
+          "value": "0",
+          "hash": "0x74ca3137a48effdf0e0443235b7a745c7f3b8ef756cc703a15cffcaaefad56d7",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "7000000000000000000",
+          "seconds_to_decision": 11,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304750002823"
+        },
+        {
+          "at": "2026-10-11T18:28:02.116Z",
+          "key": "read-reclaim-5",
+          "pass": true,
+          "target": 5,
+          "bounty": "7000000000000000000",
+          "posted": "5000000000000000000",
+          "fees_in": "2000000000000000000",
+          "held": 2,
+          "status": "CLOSED"
+        },
+        {
+          "at": "2026-10-11T18:28:40.560Z",
+          "key": "reclaim-7",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            7
+          ],
+          "value": "0",
+          "hash": "0xf4c7f210d539f3894a0c3305736852bdf58814fab9a99e0776bfc44000e6d206",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 7,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304750002823"
+        },
+        {
+          "at": "2026-10-11T18:28:41.721Z",
+          "key": "read-reclaim-7",
+          "pass": true,
+          "target": 7,
+          "bounty": "6000000000000000000",
+          "posted": "5000000000000000000",
+          "fees_in": "1000000000000000000",
+          "held": 1,
+          "status": "CLOSED"
+        },
+        {
+          "at": "2026-10-11T18:29:21.276Z",
+          "key": "reclaim-8",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            8
+          ],
+          "value": "0",
+          "hash": "0x98f84eced8f8f6a4e3d20bcdd69f41ae71329214e9260188446d134cf39c4db2",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 7,
+          "final_status": "FINALIZED",
+          "primary_fee": "126305250002823"
+        },
+        {
+          "at": "2026-10-11T18:29:22.096Z",
+          "key": "read-reclaim-8",
+          "pass": true,
+          "target": 8,
+          "bounty": "6000000000000000000",
+          "posted": "5000000000000000000",
+          "fees_in": "1000000000000000000",
+          "held": 1,
+          "status": "CLOSED"
+        },
+        {
+          "at": "2026-10-11T18:29:30.255Z",
+          "key": "reclaim-again-2",
+          "method": "reclaim",
+          "account": "golden_builder",
+          "from": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "args": [
+            2
+          ],
+          "value": "0",
+          "hash": "0x34f5b08a938bc8ea9e83d9af4827418c82d6af4f66255bd0b335ed657d5a128c",
+          "expect": "refused",
+          "ok": false,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": "this bounty has already been reclaimed",
+          "paid_by_contract": "0",
+          "seconds_to_decision": 8,
+          "primary_fee": "78628000002823"
+        },
+        {
+          "at": "2026-10-11T18:30:14.919Z",
+          "key": "claim-1-golden_hunter_1",
+          "method": "claim",
+          "account": "golden_hunter_1",
+          "from": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "args": [
+            1
+          ],
+          "value": "0",
+          "hash": "0x26a1d8b12662ba6f13496d05a7bdfff35e0ad3e7928a6058b4bd67b955fcbea9",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 12,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304750002823"
+        },
+        {
+          "at": "2026-10-11T18:30:53.636Z",
+          "key": "claim-2-golden_hunter_1",
+          "method": "claim",
+          "account": "golden_hunter_1",
+          "from": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "args": [
+            2
+          ],
+          "value": "0",
+          "hash": "0x6bbc5d7c2d62e9c050196c9b7f771d23d6db36cf951dec3666f75bb501cc60d7",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "1000000000000000000",
+          "seconds_to_decision": 7,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304250002823"
+        },
+        {
+          "at": "2026-10-11T18:31:32.508Z",
+          "key": "claim-4-golden_hunter_1",
+          "method": "claim",
+          "account": "golden_hunter_1",
+          "from": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "args": [
+            4
+          ],
+          "value": "0",
+          "hash": "0xc4c4d0a84ee12596ade8e5bf1990d9f4cab99d24e25756c5022bd1bbf9505c21",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 7,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304500002823"
+        },
+        {
+          "at": "2026-10-11T18:32:12.891Z",
+          "key": "claim-6-golden_hunter_1",
+          "method": "claim",
+          "account": "golden_hunter_1",
+          "from": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "args": [
+            6
+          ],
+          "value": "0",
+          "hash": "0x6f39b440a805295182e6b2beda12cde565035d00a50bc2c4a49b7e6e3440066e",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "6000000000000000000",
+          "seconds_to_decision": 8,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304500002823"
+        },
+        {
+          "at": "2026-10-11T18:33:02.545Z",
+          "key": "claim-1-golden_hunter_2",
+          "method": "claim",
+          "account": "golden_hunter_2",
+          "from": "0x43f593D47C9C9Dc8BfdD08Ef945b97861c419fb1",
+          "args": [
+            1
+          ],
+          "value": "0",
+          "hash": "0xe2d307a0df7d34a32f09276bff44980bcd4a8a99016f03e4274b6db4a527defd",
+          "expect": "ok",
+          "ok": true,
+          "pass": true,
+          "status": "ACCEPTED",
+          "refusal": null,
+          "paid_by_contract": "1000000000000000000",
+          "seconds_to_decision": 7,
+          "final_status": "FINALIZED",
+          "primary_fee": "126304250002823"
+        },
+        {
+          "at": "2026-10-11T18:33:20.991Z",
+          "key": "reconcile-golden_builder",
+          "pass": true,
+          "account": "golden_builder",
+          "transactions": 6,
+          "start": "959999370914499977416",
+          "paid_by_contract": "33000000000000000000",
+          "value_out": "0",
+          "primary_fees": "710152500016938",
+          "expected": "992998660761999960478",
+          "end": "992998660761999960478",
+          "difference": "0"
+        },
+        {
+          "at": "2026-10-11T18:33:23.199Z",
+          "key": "reconcile-golden_hunter_1",
+          "pass": true,
+          "account": "golden_hunter_1",
+          "transactions": 5,
+          "start": "988998336363499940717",
+          "paid_by_contract": "19000000000000000000",
+          "value_out": "0",
+          "primary_fees": "583846000014115",
+          "expected": "1007997752517499926602",
+          "end": "1007997752517499926602",
+          "difference": "0"
+        },
+        {
+          "at": "2026-10-11T18:33:23.857Z",
+          "key": "reconcile-golden_hunter_2",
+          "pass": true,
+          "account": "golden_hunter_2",
+          "transactions": 1,
+          "start": "998999842734499994354",
+          "paid_by_contract": "1000000000000000000",
+          "value_out": "0",
+          "primary_fees": "126304250002823",
+          "expected": "999999716430249991531",
+          "end": "999999716430249991531",
+          "difference": "0"
+        },
+        {
+          "at": "2026-10-11T18:33:24.523Z",
+          "key": "reconcile-seed_builder",
+          "pass": true,
+          "account": "seed_builder",
+          "transactions": 1,
+          "start": "724999528177249983062",
+          "paid_by_contract": "0",
+          "value_out": "0",
+          "primary_fees": "78628000002823",
+          "expected": "724999449549249980239",
+          "end": "724999449549249980239",
+          "difference": "0"
+        },
+        {
+          "at": "2026-10-11T18:33:30.623Z",
+          "key": "page-reclaimed",
+          "pass": true,
+          "url": "https://redline-genlayer.vercel.app/t/2",
+          "http": 200
+        }
+      ],
+      "start": {
+        "golden_builder": {
+          "address": "0x71284d121d1CB4a77886Cb2dE62Dea65c439E073",
+          "balance": "959999370914499977416"
+        },
+        "golden_hunter_1": {
+          "address": "0x51473f0dA487c986bf598571Cd08641250fA83a3",
+          "balance": "988998336363499940717"
+        },
+        "golden_hunter_2": {
+          "address": "0x43f593D47C9C9Dc8BfdD08Ef945b97861c419fb1",
+          "balance": "998999842734499994354"
+        },
+        "seed_builder": {
+          "address": "0x844e02E8a0828c371CCa369013EF58549F998641",
+          "balance": "724999528177249983062"
+        }
+      },
+      "finished": "2026-10-11T18:33:30.624Z"
+    }
+  }
+}

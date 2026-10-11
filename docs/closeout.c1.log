@@ -1,0 +1,22 @@
+balances at start recorded
+attack-after-lock: attack refused: this target's attack window ended with its lock (ACCEPTED)   0xcdb05b13d0e892d75d58108a82c6d38a52bf80c36c29f57a7f8a72fe193f5f6a
+reclaim-before-lock: reclaim refused: the bounty is locked until 1792245279 (unix seconds) (ACCEPTED)   0x9f2a53d365a69d0b1543d69e16f03c1ad820b2b4c22d1b7c37293d80632da87f
+reclaim-2: reclaim ok (ACCEPTED)   0xd04eaef83eb54eda8151aa7050b0ba68869adb02be5e095b2cdfde5d1ec4317d
+reclaim-3: reclaim ok (ACCEPTED)   0xd6e4388494ab55b2c309d7ce7543dd10e3c084b48c36392a2da9b73485c186d0
+reclaim-5: reclaim ok (ACCEPTED)   0x74ca3137a48effdf0e0443235b7a745c7f3b8ef756cc703a15cffcaaefad56d7
+reclaim-7: reclaim ok (ACCEPTED)   0xf4c7f210d539f3894a0c3305736852bdf58814fab9a99e0776bfc44000e6d206
+reclaim-8: reclaim ok (ACCEPTED)   0x98f84eced8f8f6a4e3d20bcdd69f41ae71329214e9260188446d134cf39c4db2
+reclaim-again-2: reclaim refused: this bounty has already been reclaimed (ACCEPTED)   0x34f5b08a938bc8ea9e83d9af4827418c82d6af4f66255bd0b335ed657d5a128c
+claim-1-golden_hunter_1: claim ok (ACCEPTED)   0x26a1d8b12662ba6f13496d05a7bdfff35e0ad3e7928a6058b4bd67b955fcbea9
+claim-2-golden_hunter_1: claim ok (ACCEPTED)   0x6bbc5d7c2d62e9c050196c9b7f771d23d6db36cf951dec3666f75bb501cc60d7
+claim-4-golden_hunter_1: claim ok (ACCEPTED)   0xc4c4d0a84ee12596ade8e5bf1990d9f4cab99d24e25756c5022bd1bbf9505c21
+claim-6-golden_hunter_1: claim ok (ACCEPTED)   0x6f39b440a805295182e6b2beda12cde565035d00a50bc2c4a49b7e6e3440066e
+claim-1-golden_hunter_2: claim ok (ACCEPTED)   0xe2d307a0df7d34a32f09276bff44980bcd4a8a99016f03e4274b6db4a527defd
+golden_builder: start 959.9993709144999 GEN, paid 33 GEN, fees 0.000710152500016938 GEN -> expected 992.9986607619999 GEN, end 992.9986607619999 GEN, difference 0 wei
+golden_hunter_1: start 988.9983363634999 GEN, paid 19 GEN, fees 0.000583846000014115 GEN -> expected 1007.9977525175 GEN, end 1007.9977525175 GEN, difference 0 wei
+golden_hunter_2: start 998.9998427344999 GEN, paid 1 GEN, fees 0.000126304250002823 GEN -> expected 999.99971643025 GEN, end 999.99971643025 GEN, difference 0 wei
+seed_builder: start 724.99952817725 GEN, paid 0 GEN, fees 0.000078628000002823 GEN -> expected 724.99944954925 GEN, end 724.99944954925 GEN, difference 0 wei
+page-reclaimed: HTTP 200 shows it  https://redline-genlayer.vercel.app/t/2
+
+recorded in docs/closeout.studio-next.json (run c1); every step passed
+exit 0

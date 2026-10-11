@@ -12,4 +12,5 @@
 - [x] README, submission/
 - [ ] Portal entry (HANDOFF.md)
 - [ ] Silent demo recording (HANDOFF.md)
-- [ ] Reclaim on chain once a lock ends (first golden locks end 2026-10-10)
+- [x] Reclaim on chain once a lock ends (closeout run c1, 2026-10-11)
+- [x] Hall of breaks export, JSON and CSV (spec stretch goal)

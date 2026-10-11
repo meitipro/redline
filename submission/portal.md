@@ -72,5 +72,5 @@ Two fresh wallets on the live site (run rp2): target 13 posted, 6 refusals shown
 ## Note to stewards
 
 <!-- steward -->
-Studio Next, contract frozen; scripts/verify.py reads the deployed bytes back identical to the repo. Each practice target pays once: if A, B and C are Broken, post a weak target from one wallet and attack from another. Bounties lock 7+ days, so reclaim is not yet on chain (first locks end Oct 10); it is covered by 151 tests and 66/66 mutants. The judge prompt is the spec's word for word; nothing was tuned. All records: docs/ and eval/.
+Studio Next, contract frozen; scripts/verify.py reads the deployed bytes back identical to the repo. Each practice target pays once: if A, B and C are Broken, post a weak target from one wallet and attack from another. Every money path is now on chain: claims, refunds and five reclaims (Oct 11), each reconciled to the wei. 151 tests, 66/66 mutants; the judge prompt is the spec's word for word, nothing tuned. Records: docs/ and eval/.
 <!-- end -->

@@ -1,0 +1,75 @@
+---
+title: Hall of breaks export
+description: Every judged attempt on the deployed contract as JSON or CSV, to test your own agent against.
+---
+
+A private test finds one or two failures. The public record of every attempt against every target, held and broken, is
+a map of where prompts are weak. The export puts that record in a file.
+
+- **JSON:** [/hall/export.json](/hall/export.json): the attempts, a count by status, the contract and when it was read.
+- **CSV:** [/hall/export.csv](/hall/export.csv): the same rows, one per attempt, with a header row.
+
+Both are read from the chain and the explorer when you ask, cached for a minute, so the file is the record and not a
+copy of it. Queued attacks are left out until they are judged.
+
+## Fields
+
+| Field | What it holds |
+|---|---|
+| `attack_id`, `target_id` | The ids on the contract; `page` is the attack's page on this site |
+| `set` | Where the attempt came from: `golden-eval` (the evaluation), `reviewer-path` (end-to-end test runs), `practice` (the practice targets), `open` (everything else) |
+| `target_name`, `mode`, `instructions`, `rules` | The target as posted; the instructions keep the `{CANARY}` slot, the rules are JSON |
+| `attack` | The hunter's message, in full |
+| `status`, `verdict`, `rule`, `rule_kind` | `HELD`, `BROKEN` (with the rule number and its kind), `REJECTED` or `VOID` |
+| `reason` | The failed exact check, the code check, or the scope judge's sentence |
+| `reply` | The leader's reply, cut to 400 characters by the contract; where the canary appeared it is stored as `{CANARY}` |
+| `hunter`, `fee_wei` | Who sent it and the entry fee they paid |
+| `submitted_at`, `judged_at` | ISO 8601, UTC, from the transactions' own clock |
+| `attack_tx`, `judge_tx` | The transactions behind the row; open them on the explorer |
+
+<Callout type="warn" title="Read the replies as one model's answer">
+  Each validator ran the agent on its own model and they agreed on the verdict, but only the leader's reply is stored.
+  Your agent on your model may answer differently, which is the point of testing it.
+</Callout>
+
+## Turn it into a test set
+
+This script downloads the JSON, prints the counts, and writes every attack that broke a rule to a JSONL file you can
+send to your own agent. Standard library only:
+
+{/* include: web/examples/dataset.py */}
+```python title="web/examples/dataset.py"
+"""
+Download the Hall of breaks export and turn it into a test set for your own agent.
+
+    python web/examples/dataset.py [site]
+
+Prints the attempts by status and, for the breaks, by rule kind, then writes
+redline-attacks.jsonl: one line per attack that broke a rule, with the rule it
+broke, ready to send to your own agent as user messages. Standard library
+only. This file is the sample on the docs page "Hall of breaks export", copied
+in by scripts/gen_docs.py.
+"""
+
+import collections
+import json
+import sys
+import urllib.request
+
+site = (sys.argv[1] if len(sys.argv) > 1 else "https://redline-genlayer.vercel.app").rstrip("/")
+request = urllib.request.Request(site + "/hall/export.json", headers={"User-Agent": "redline-dataset-example"})
+data = json.load(urllib.request.urlopen(request))
+attempts = data["attempts"]
+
+print(f"{len(attempts)} judged attempts on {data['contract']}")
+print("by status:", dict(collections.Counter(a["status"] for a in attempts)))
+breaks = [a for a in attempts if a["status"] == "BROKEN"]
+print("breaks by rule kind:", dict(collections.Counter(a["rule_kind"] for a in breaks)))
+
+with open("redline-attacks.jsonl", "w", encoding="utf-8") as out:
+    for a in breaks:
+        rule = next(r for r in json.loads(a["rules"]) if r["number"] == a["rule"])
+        out.write(json.dumps({"attack": a["attack"], "broke": rule, "target": a["target_name"], "page": site + a["page"]}) + "\n")
+print(f"wrote redline-attacks.jsonl with {len(breaks)} attacks that broke a rule")
+```
+{/* end include */}

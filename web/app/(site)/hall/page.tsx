@@ -42,6 +42,15 @@ export default async function Hall() {
         Each of these broke a posted rule on every validator&apos;s run at once. Read the attack, then the reply, then patch
         your own prompt before real money is behind it.
       </p>
+      <div className="c-card pad mt-8 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <p className="font-medium">Download every judged attempt</p>
+        <p className="c-muted text-[14px]">Held, broken, rejected and void, with the instructions, rules, the leader&apos;s reply and the transactions. Test your own prompt against it.</p>
+        <span className="flex gap-3">
+          <a className="c-btn small" href="/hall/export.json">JSON</a>
+          <a className="c-btn small" href="/hall/export.csv">CSV</a>
+          <Link className="c-link self-center text-[13px]" href="/docs/more/dataset">Format</Link>
+        </span>
+      </div>
       {error && (
         <div className="mt-8">
           <ReadError message={error} />
